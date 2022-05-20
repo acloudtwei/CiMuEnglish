@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大学生考证辅助平台</title>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="../static/css/myspace.css" th:href="@{/css/myspace.css}">
+    <script src="../static/js/shanbei.js" th:src="@{/js/shanbei.js}"></script>
+
+</head>
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+    </div>
+    <div class="return">
+            <button style="background: none;border: none" onclick="window.history.back();">
+           <img src="../images/return.png" th:href="@{images/home.jpg}" style="width: 27px;height: 32px; padding-top: 5px;"></button>
+    </div>
+
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li  ><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="top__tasks3" id="myspace">
+    <div class="tasks__list">
+        <div class="itemsF" id="myspace-itemsF">
+            <div id="userhead">
+                <div style="" class="text-white"><img id="qqlogo"
+                                                      src="../images/logos.jpg"/>
+                </div>
+            </div>
+            <div>
+                <div class="basic-information">
+                    <h2 style="">基本信息</h2>
+                </div>
+                <div style="margin: auto 12px;background-color: white;border-radius: 5px;">
+                    <table border="0" id="basic-information">
+                        <tr class="basic-information-tr">
+                            <td id=class="basic-information-td1">用户名：</td>
+                            <td id="user_name1">用户名</td>
+                        </tr>
+                        <tr class="basic-information-tr">
+                            <td class="basic-information-td1">登录邮箱：</td>
+                            <td id="qqemail"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let username = $("#user_name1");
+            let email = $("#qqemail");
+            let homeusername = $("#homeusername");
+            let qqlogo = $("#qqlogo");
+            let homelogo = $("#homelogo");
+            $.ajax({
+                url: "/api/getmessage",
+                type: "GET",
+                success: function (data) {
+                    username.text(data.username);
+                    homeusername.text(data.username);
+                    email.text(data.email);
+                    homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+                    qqlogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+                },
+                error: function (e) {
+                    username.text("null");
+                    email.text("null");
+                }
+            });
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

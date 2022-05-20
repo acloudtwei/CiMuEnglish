@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>词母守中线</title>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}">
+    <script src="../static/js/shanbei.js" th:src="@{/js/shanbei.js}"></script>
+</head>
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <button onclick="first()">首页</button>
+        </li>
+        <li class="nav__main">
+            <button id="study" onclick="second()">学习</button>
+        </li>
+        <li class="nav__main">
+            <button id="review" onclick="third()">复习</button>
+        </li>
+        <li class="nav__main">
+            <button onclick="fourth()">翻译</button>
+        </li>
+        <li class="nav__main">
+            <button id="collect" onclick="fifth()">收藏</button>
+        </li>
+        <li class="nav__main">
+            <button id="achievement" onclick="sixth()">成就</button>
+        </li>
+    </ul>
+    <div class="input__btn" id="input__btn" onmouseout="initailStyle()">
+
+        <input type="text" id="input" onmousedown="changeInputStyle()">
+
+        <div class="search">
+            <button id="queryword" class="text-white" data-toggle="modal" data-target="#myModal">查词</button>
+        </div>
+
+    </div>
+    <!--    <div class="help__btn">-->
+    <!--        <p>帮助</p>-->
+    <!--    </div>-->
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li onclick="myspace()">我的空间</li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!------以下首页部分------>
+    <div class="top__tasks" id="first">
+        <ul class="tasks__list">
+            <li class="items">
+                <div class="images1">
+
+                </div>
+                <div class="bottom__item">
+                    <div class="item__study">
+                        <button id="chuzhong" onclick="second()">去学习</button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="items">
+                <div class="images2">
+
+                </div>
+                <div class="bottom__item">
+                    <div class="item__study">
+                        <button id="gaozhong" onclick="second()">去学习</button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="items">
+                <div class="images3">
+
+                </div>
+                <div class="bottom__item">
+                    <div class="item__study">
+                        <button id="cet4" onclick="second()">去学习</button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="items">
+                <div class="images4">
+                </div>
+                <div class="bottom__item">
+                    <div class="item__study">
+                        <button id="cet6" onclick="second()">去学习</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="mid__inf" id="firstF">
+        <div class="left__sentence">
+            <div class="top__days">
+                <div class="days">
+                    <b><p>词母金句</p></b>
+                </div>
+            </div>
+            <div class="mid__sentence">
+                <div class="left__user__img">
+                    <img src="../images/user_img.png">
+                </div>
+                <div class="right__sentence">
+                    <div class="horn">
+                    </div>
+                    <div class="main__sentence">
+                        <div class="en__s">
+                            <p>Great minds have purpose, others have wishes.</p><br>
+                        </div>
+                        <div class="ch__s">
+                            <p>杰出的人有着目标，其他人只有愿望。</p>
+                        </div>
+                        <div class="author">
+                            <p> ---- "Ci Mu"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right__recommend">
+            <div class="top__recommend__title">
+                <p>今日推荐</p>
+            </div>
+            <div class="recommend__content">
+                <div class="recommend__img">
+                    <img src="../images/2fbe161f6e6d441d515b80f47f0c9333f60a77cbd793e430c1d8a5a505543d91.png" alt="">
+                </div>
+                <div class="recommend__inf">
+                    <div class="inf__title">
+                        <p>
+                            想改变的人都在这里
+                        </p>
+                    </div>
+                    <div class="inf__content">
+                        <p>每天千万人互相鞭策<br>
+                            陪你一起改变 共同成长<br>
+                            还有负责的组长监督和鼓励<br>
+                            英语学习的道路上你不是孤军奋战<br>
+                            来结识适合你的那群人吧(ง •̀_•́)ง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    以下背单词轮播部分-->
+
+    <div class="top__tasks3" id="second">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <div style="height: 51px; width: 800px">
+                    <h1><span class="p-2 badge badge-success badge-pill">Study</span>
+                        <div class="btn-group btn-group-sm" style="padding-left: 560px">
+                            <button id="wordcollect" type="button" class="btn btn-primary"
+                                    style="background-color : #2FC4B2">收藏
+                            </button>
+                            <button id="wordcollectcanccel" type="button" class="btn btn-primary"
+                                    style="background-color : #2FC4B2">取消
+                            </button>
+                            <button id="wordarousel" class="btn  btn-outline-primary">开始轮播</button>
+                            <button id="cancelwordarousel" class="btn btn-outline-primary">结束轮播</button>
+                        </div>
+
+                    </h1>
+                </div>
+                <center>
+                    <script>
+                        $("#wordcollect").click(function () {
+                            let wordname = $('#wordname').text();
+                            $.ajax({
+                                url: "/api/addcollection",
+                                type: "POST",
+                                data: {word: wordname},
+                                success: function (data) {
+                                    eval(data);
+                                },
+                                error: function (e) {
+                                    alert(e);
+                                }
+                            });
+                        });
+                        $("#wordcollectcanccel").click(function () {
+                            let wordname = $('#wordname').text();
+                            $.ajax({
+                                url: "/api/deletecollection",
+                                type: "POST",
+                                data: {word: wordname},
+                                success: function (data) {
+                                    eval(data);
+                                },
+                                error: function (e) {
+                                    alert(e);
+                                }
+                            });
+                        });
+
+                    </script>
+                    <div id="wordname" class="word">
+                    </div>
+                    <div class="soundmark">
+                        <audio id="wordspeak" src=""></audio>
+                        <span id="worduk"></span>
+                        <img alt="trumpet" id="wordukimg"
+                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAilBMVEUAAAApwaApvqBO3MoovqEov6Apv6Epv6Iov6EpvqEpv6Eov6EpwKErwKItxKcwxKkov6Epv6ApwKEpwKEtw6Uov6Epv6Eov6Eov6Epv6Epv6EpwKIpwKEpv6Mpw6MuwqMpvqEqwKIrwqEqwqI1yqopv6Apv6EpvqEpvqIowKEovqEov6Eov6EovqAIbtG3AAAALXRSTlMAPugD/fnCbtiftYyFNRYM9Od+VxvGZs28mHNaUjomIdVMLysI7q+odl7p3KuvvkW8AAABfElEQVRIx+3WyXaCMBiG4d9CQEaZBRQc69D2u//bKzUtLfQQSNx5fDdZPRpDQqRnD9GxXihTJwBz1Kw3x1cqWnN13NJ9aXtY4qdK9msvDG0zObtJAVWcBRjCx72YJjYwiA3YmsCuXiHAW6D4v0KmPW9aFidAhCsGmH2bo02IaQXovd9dYhz7xYWaIiDvYmMCNgG3GbQ5sOvgcAI+MCBrxh0w76z4ywRMsY7A59OcSWNyAasZYsCRx4sQ+qYZGN5lMV+zshlsYC+PfR0p/4xYHlMKXSNaA6UCtoCEyAMcBewCHlECnO/BlvK0K7Vpp2B8wUylR2XwR7VW2iQm3yT1HdtzS9LYAQp+MFxpvPo9kp7sy6BiwJVua72kv+UTsAVE/DXUu0OyCdhLo+9NdqJuH+OYdwVYTb1iy2iyI0uMZwx6TIPtwpHrJiJB/lmAc36ehHfdINZqGiux+1j2flfHtDFa7JF0Wsm4DRbyuP03ZZJSWvSGMCPlFvTsMfoEWPe4qIWR/SoAAAAASUVORK5CYII="
+                             class="Pronounce_audio__3xdMh" style="height: 50px; width: 50px; ">
+                        <span id="wordus"></span>
+                        <!-- <audio id="wordsuspeak" src=""></audio>-->
+                        <img alt="trumpet" id="wordusimg"
+                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAilBMVEUAAAApwaApvqBO3MoovqEov6Apv6Epv6Iov6EpvqEpv6Eov6EpwKErwKItxKcwxKkov6Epv6ApwKEpwKEtw6Uov6Epv6Eov6Eov6Epv6Epv6EpwKIpwKEpv6Mpw6MuwqMpvqEqwKIrwqEqwqI1yqopv6Apv6EpvqEpvqIowKEovqEov6Eov6EovqAIbtG3AAAALXRSTlMAPugD/fnCbtiftYyFNRYM9Od+VxvGZs28mHNaUjomIdVMLysI7q+odl7p3KuvvkW8AAABfElEQVRIx+3WyXaCMBiG4d9CQEaZBRQc69D2u//bKzUtLfQQSNx5fDdZPRpDQqRnD9GxXihTJwBz1Kw3x1cqWnN13NJ9aXtY4qdK9msvDG0zObtJAVWcBRjCx72YJjYwiA3YmsCuXiHAW6D4v0KmPW9aFidAhCsGmH2bo02IaQXovd9dYhz7xYWaIiDvYmMCNgG3GbQ5sOvgcAI+MCBrxh0w76z4ywRMsY7A59OcSWNyAasZYsCRx4sQ+qYZGN5lMV+zshlsYC+PfR0p/4xYHlMKXSNaA6UCtoCEyAMcBewCHlECnO/BlvK0K7Vpp2B8wUylR2XwR7VW2iQm3yT1HdtzS9LYAQp+MFxpvPo9kp7sy6BiwJVua72kv+UTsAVE/DXUu0OyCdhLo+9NdqJuH+OYdwVYTb1iy2iyI0uMZwx6TIPtwpHrJiJB/lmAc36ehHfdINZqGiux+1j2flfHtDFa7JF0Wsm4DRbyuP03ZZJSWvSGMCPlFvTsMfoEWPe4qIWR/SoAAAAASUVORK5CYII="
+                             class="Pronounce_audio__3xdMh" style="height: 50px; width: 50px; ">
+                    </div>
+                    <div id="wordexplain" style="height: 60px">
+                    </div>
+                    <div id="wordsentence" style="height:80px">
+                    </div>
+                    <div id="wordphrase" style="height:80px">
+                    </div>
+                </center>
+
+                <div class="next">
+                    <center>
+                        <button id="wordnext" type="button">NEXT</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#study").click(function () {
+            let wordname = $("#wordname");
+            let worduk = $("#worduk");
+            let wordus = $("#wordus");
+            let wordexplain = $("#wordexplain");
+            let wordsentence = $("#wordsentence");
+            let wordphrase = $("#wordphrase");
+            let wordspeak = $("#wordspeak");
+            $.ajax({
+                url: "/api/getchuzhong",
+                type: "POST",
+                data: {wordtype: "chuzhong"},
+                success: function (data) {
+                    let synos = data.synos;
+                    let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    // 单词词性解析
+                    let n = synos.split(",");
+                    let str = "";
+                    $.each(n, function (index, value) {
+                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                        $.each(json, function (i) {
+                            str = (i + ". " + json[i] + " ") + str;
+                        });
+                    });
+                    // 单词句子解析
+                    let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                    // 单词短语解析
+                    let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                    wordname.text(data.headword);
+                    worduk.text(data.ukphone);
+                    wordus.text(data.usphone);
+                    wordexplain.text(str);
+                    wordsentence.text(newsentences);
+                    wordphrase.text(newphrases);
+                    $("#wordukimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.ukspeech);
+                        wordspeak[0].play();
+                    });
+                    $("#wordusimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.usspeech);
+                        wordspeak[0].play();
+                    });
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+            $("#wordnext").click(function () {
+                let wordname = $("#wordname");
+                let worduk = $("#worduk");
+                let wordus = $("#wordus");
+                let wordexplain = $("#wordexplain");
+                let wordsentence = $("#wordsentence");
+                let wordphrase = $("#wordphrase");
+                let wordspeak = $("#wordspeak");
+                $.ajax({
+                    url: "/api/getchuzhong",
+                    type: "POST",
+                    data: {wordtype: "chuzhong"},
+                    success: function (data) {
+                        let synos = data.synos;
+                        let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        // 单词句子解析
+                        let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                        // 单词短语解析
+                        let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                        wordname.text(data.headword);
+                        worduk.text(data.ukphone);
+                        wordus.text(data.usphone);
+                        wordexplain.text(str);
+                        wordsentence.text(newsentences);
+                        wordphrase.text(newphrases);
+                        $("#wordukimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.ukspeech);
+                            wordspeak[0].play();
+                        });
+                        $("#wordusimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.usspeech);
+                            wordspeak[0].play();
+                        });
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+        });
+
+        $("#chuzhong").click(function () {
+            let wordname = $("#wordname");
+            let worduk = $("#worduk");
+            let wordus = $("#wordus");
+            let wordexplain = $("#wordexplain");
+            let wordsentence = $("#wordsentence");
+            let wordphrase = $("#wordphrase");
+            let wordspeak = $("#wordspeak");
+            $.ajax({
+                url: "/api/getchuzhong",
+                type: "POST",
+                data: {wordtype: "chuzhong"},
+                success: function (data) {
+                    let synos = data.synos;
+                    let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    // 单词词性解析
+                    let n = synos.split(",");
+                    let str = ""
+                    $.each(n, function (index, value) {
+                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                        $.each(json, function (i) {
+                            str = (i + ". " + json[i] + " ") + str;
+                        });
+                    });
+                    // 单词句子解析
+                    let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                    // 单词短语解析
+                    let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                    wordname.text(data.headword);
+                    worduk.text(data.ukphone);
+                    wordus.text(data.usphone);
+                    wordexplain.text(str);
+                    wordsentence.text(newsentences);
+                    wordphrase.text(newphrases);
+                    $("#wordukimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.ukspeech);
+                        wordspeak[0].play();
+                    });
+                    $("#wordusimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.usspeech);
+                        wordspeak[0].play();
+                    });
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+            $("#wordnext").click(function () {
+                let wordname = $("#wordname");
+                let worduk = $("#worduk");
+                let wordus = $("#wordus");
+                let wordexplain = $("#wordexplain");
+                let wordsentence = $("#wordsentence");
+                let wordphrase = $("#wordphrase");
+                let wordspeak = $("#wordspeak");
+                $.ajax({
+                    url: "/api/getchuzhong",
+                    type: "POST",
+                    data: {wordtype: "chuzhong"},
+                    success: function (data) {
+                        let synos = data.synos;
+                        let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        // 单词句子解析
+                        let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                        // 单词短语解析
+                        let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                        wordname.text(data.headword);
+                        worduk.text(data.ukphone);
+                        wordus.text(data.usphone);
+                        wordexplain.text(str);
+                        wordsentence.text(newsentences);
+                        wordphrase.text(newphrases);
+                        $("#wordukimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.ukspeech);
+                            wordspeak[0].play();
+                        });
+                        $("#wordusimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.usspeech);
+                            wordspeak[0].play();
+                        });
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+            $("#wordarousel").click(function () {
+                $("#wordarousel").attr("disabled", true);
+                let time1 = setInterval(function () {
+                    let wordname = $("#wordname");
+                    let worduk = $("#worduk");
+                    let wordus = $("#wordus");
+                    let wordexplain = $("#wordexplain");
+                    let wordsentence = $("#wordsentence");
+                    let wordphrase = $("#wordphrase");
+                    let wordspeak = $("#wordspeak");
+                    $.ajax({
+                        url: "/api/getchuzhong",
+                        type: "POST",
+                        data: {wordtype: "chuzhong"},
+                        success: function (data) {
+                            let synos = data.synos;
+                            let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            // 单词词性解析
+                            let n = synos.split(",");
+                            let str = "";
+                            $.each(n, function (index, value) {
+                                let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                $.each(json, function (i) {
+                                    str = (i + ". " + json[i] + " ") + str;
+                                });
+                            });
+                            // 单词句子解析
+                            let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                            // 单词短语解析
+                            let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                            wordname.text(data.headword);
+                            worduk.text(data.ukphone);
+                            wordus.text(data.usphone);
+                            wordexplain.text(str);
+                            wordsentence.text(newsentences);
+                            wordphrase.text(newphrases);
+                            $("#wordukimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.ukspeech);
+                                wordspeak[0].play();
+                            });
+                            $("#wordusimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.usspeech);
+                                wordspeak[0].play();
+                            });
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                }, 5000);
+                $("#cancelwordarousel").click(function () {
+                    clearInterval(time1);
+                    $("#wordarousel").attr("disabled", false);
+                });
+            });
+        });
+
+        $("#gaozhong").click(function () {
+            let wordname = $("#wordname");
+            let worduk = $("#worduk");
+            let wordus = $("#wordus");
+            let wordexplain = $("#wordexplain");
+            let wordsentence = $("#wordsentence");
+            let wordphrase = $("#wordphrase");
+            let wordspeak = $("#wordspeak");
+            $.ajax({
+                url: "/api/getgaozhong",
+                type: "POST",
+                data: {wordtype: "gaozhong"},
+                success: function (data) {
+                    let synos = data.synos;
+                    let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    // 单词词性解析
+                    let n = synos.split(",");
+                    let str = "";
+                    $.each(n, function (index, value) {
+                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                        $.each(json, function (i) {
+                            str = (i + ". " + json[i] + " ") + str;
+                        });
+                    });
+                    // 单词句子解析
+                    let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                    // 单词短语解析
+                    let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                    wordname.text(data.headword);
+                    worduk.text(data.ukphone);
+                    wordus.text(data.usphone);
+                    wordexplain.text(str);
+                    wordsentence.text(newsentences);
+                    wordphrase.text(newphrases);
+                    $("#wordukimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.ukspeech);
+                        wordspeak[0].play();
+                    });
+                    $("#wordusimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.usspeech);
+                        wordspeak[0].play();
+                    });
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+            $("#wordnext").click(function () {
+                let wordname = $("#wordname");
+                let worduk = $("#worduk");
+                let wordus = $("#wordus");
+                let wordexplain = $("#wordexplain");
+                let wordsentence = $("#wordsentence");
+                let wordphrase = $("#wordphrase");
+                let wordspeak = $("#wordspeak");
+                $.ajax({
+                    url: "/api/getgaozhong",
+                    type: "POST",
+                    data: {wordtype: "gaozhong"},
+                    success: function (data) {
+                        let synos = data.synos;
+                        let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        // 单词句子解析
+                        let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                        // 单词短语解析
+                        let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                        wordname.text(data.headword);
+                        worduk.text(data.ukphone);
+                        wordus.text(data.usphone);
+                        wordexplain.text(str);
+                        wordsentence.text(newsentences);
+                        wordphrase.text(newphrases);
+                        $("#wordukimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.ukspeech);
+                            wordspeak[0].play();
+                        });
+                        $("#wordusimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.usspeech);
+                            wordspeak[0].play();
+                        });
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+            $("#wordarousel").click(function () {
+                $("#wordarousel").attr("disabled", true);
+                let time1 = setInterval(function () {
+                    let wordname = $("#wordname");
+                    let worduk = $("#worduk");
+                    let wordus = $("#wordus");
+                    let wordexplain = $("#wordexplain");
+                    let wordsentence = $("#wordsentence");
+                    let wordphrase = $("#wordphrase");
+                    let wordspeak = $("#wordspeak");
+                    $.ajax({
+                        url: "/api/getgaozhong",
+                        type: "POST",
+                        data: {wordtype: "gaozhong"},
+                        success: function (data) {
+                            let synos = data.synos;
+                            let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            // 单词词性解析
+                            let n = synos.split(",");
+                            let str = "";
+                            $.each(n, function (index, value) {
+                                let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                $.each(json, function (i) {
+                                    str = (i + ". " + json[i] + " ") + str;
+                                });
+                            });
+                            // 单词句子解析
+                            let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                            // 单词短语解析
+                            let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                            wordname.text(data.headword);
+                            worduk.text(data.ukphone);
+                            wordus.text(data.usphone);
+                            wordexplain.text(str);
+                            wordsentence.text(newsentences);
+                            wordphrase.text(newphrases);
+                            $("#wordukimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.ukspeech);
+                                wordspeak[0].play();
+                            });
+                            $("#wordusimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.usspeech);
+                                wordspeak[0].play();
+                            });
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                }, 5000);
+                $("#cancelwordarousel").click(function () {
+                    clearInterval(time1);
+                    $("#wordarousel").attr("disabled", false);
+                });
+            });
+
+        });
+
+        $("#cet4").click(function () {
+            let wordname = $("#wordname");
+            let worduk = $("#worduk");
+            let wordus = $("#wordus");
+            let wordexplain = $("#wordexplain");
+            let wordsentence = $("#wordsentence");
+            let wordphrase = $("#wordphrase");
+            let wordspeak = $("#wordspeak");
+            $.ajax({
+                url: "/api/getcet4",
+                type: "POST",
+                data: {wordtype: "cet4"},
+                success: function (data) {
+                    let synos = data.synos;
+                    let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    // 单词词性解析
+                    let n = synos.split(",");
+                    let str = "";
+                    $.each(n, function (index, value) {
+                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                        $.each(json, function (i) {
+                            str = (i + ". " + json[i] + " ") + str;
+                        });
+                    });
+                    // 单词句子解析
+                    let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                    // 单词短语解析
+                    let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                    wordname.text(data.headword);
+                    worduk.text(data.ukphone);
+                    wordus.text(data.usphone);
+                    wordexplain.text(str);
+                    wordsentence.text(newsentences);
+                    wordphrase.text(newphrases);
+                    $("#wordukimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.ukspeech);
+                        wordspeak[0].play();
+                    });
+                    $("#wordusimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.usspeech);
+                        wordspeak[0].play();
+                    });
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+            $("#wordnext").click(function () {
+                let wordname = $("#wordname");
+                let worduk = $("#worduk");
+                let wordus = $("#wordus");
+                let wordexplain = $("#wordexplain");
+                let wordsentence = $("#wordsentence");
+                let wordphrase = $("#wordphrase");
+                let wordspeak = $("#wordspeak");
+                $.ajax({
+                    url: "/api/getcet4",
+                    type: "POST",
+                    data: {wordtype: "cet4"},
+                    success: function (data) {
+                        let synos = data.synos;
+                        let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        // 单词句子解析
+                        let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                        // 单词短语解析
+                        let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                        wordname.text(data.headword);
+                        worduk.text(data.ukphone);
+                        wordus.text(data.usphone);
+                        wordexplain.text(str);
+                        wordsentence.text(newsentences);
+                        wordphrase.text(newphrases);
+                        $("#wordukimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.ukspeech);
+                            wordspeak[0].play();
+                        });
+                        $("#wordusimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.usspeech);
+                            wordspeak[0].play();
+                        });
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+            $("#wordarousel").click(function () {
+                $("#wordarousel").attr("disabled", true);
+                let time1 = setInterval(function () {
+                    let wordname = $("#wordname");
+                    let worduk = $("#worduk");
+                    let wordus = $("#wordus");
+                    let wordexplain = $("#wordexplain");
+                    let wordsentence = $("#wordsentence");
+                    let wordphrase = $("#wordphrase");
+                    let wordspeak = $("#wordspeak");
+                    $.ajax({
+                        url: "/api/getcet4",
+                        type: "POST",
+                        data: {wordtype: "cet4"},
+                        success: function (data) {
+                            let synos = data.synos;
+                            let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            // 单词词性解析
+                            let n = synos.split(",");
+                            let str = "";
+                            $.each(n, function (index, value) {
+                                let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                $.each(json, function (i) {
+                                    str = (i + ". " + json[i] + " ") + str;
+                                });
+                            });
+                            // 单词句子解析
+                            let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                            // 单词短语解析
+                            let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                            wordname.text(data.headword);
+                            worduk.text(data.ukphone);
+                            wordus.text(data.usphone);
+                            wordexplain.text(str);
+                            wordsentence.text(newsentences);
+                            wordphrase.text(newphrases);
+                            $("#wordukimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.ukspeech);
+                                wordspeak[0].play();
+                            });
+                            $("#wordusimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.usspeech);
+                                wordspeak[0].play();
+                            });
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                }, 5000);
+                $("#cancelwordarousel").click(function () {
+                    clearInterval(time1);
+                    $("#wordarousel").attr("disabled", false);
+                });
+            });
+        });
+
+        $("#cet6").click(function () {
+            let wordname = $("#wordname");
+            let worduk = $("#worduk");
+            let wordus = $("#wordus");
+            let wordexplain = $("#wordexplain");
+            let wordsentence = $("#wordsentence");
+            let wordphrase = $("#wordphrase");
+            let wordspeak = $("#wordspeak");
+            $.ajax({
+                url: "/api/getcet6",
+                type: "POST",
+                data: {wordtype: "cet6"},
+                success: function (data) {
+                    let synos = data.synos;
+                    let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                    // 单词词性解析
+                    let n = synos.split(",");
+                    let str = "";
+                    $.each(n, function (index, value) {
+                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                        $.each(json, function (i) {
+                            str = (i + ". " + json[i] + " ") + str;
+                        });
+                    });
+                    // 单词句子解析
+                    let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                    // 单词短语解析
+                    let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                    wordname.text(data.headword);
+                    worduk.text(data.ukphone);
+                    wordus.text(data.usphone);
+                    wordexplain.text(str);
+                    wordsentence.text(newsentences);
+                    wordphrase.text(newphrases);
+                    $("#wordukimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.ukspeech);
+                        wordspeak[0].play();
+                    });
+                    $("#wordusimg").click(function () {
+                        wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                            + data.usspeech);
+                        wordspeak[0].play();
+                    });
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+            $("#wordnext").click(function () {
+                let wordname = $("#wordname");
+                let worduk = $("#worduk");
+                let wordus = $("#wordus");
+                let wordexplain = $("#wordexplain");
+                let wordsentence = $("#wordsentence");
+                let wordphrase = $("#wordphrase");
+                let wordspeak = $("#wordspeak");
+                $.ajax({
+                    url: "/api/getcet6",
+                    type: "POST",
+                    data: {wordtype: "cet6"},
+                    success: function (data) {
+                        let synos = data.synos;
+                        let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        // 单词句子解析
+                        let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                        // 单词短语解析
+                        let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                        wordname.text(data.headword);
+                        worduk.text(data.ukphone);
+                        wordus.text(data.usphone);
+                        wordexplain.text(str);
+                        wordsentence.text(newsentences);
+                        wordphrase.text(newphrases);
+                        $("#wordukimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.ukspeech);
+                            wordspeak[0].play();
+                        });
+                        $("#wordusimg").click(function () {
+                            wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                + data.usspeech);
+                            wordspeak[0].play();
+                        });
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+            $("#wordarousel").click(function () {
+                $("#wordarousel").attr("disabled", true);
+                let time1 = setInterval(function () {
+                    let wordname = $("#wordname");
+                    let worduk = $("#worduk");
+                    let wordus = $("#wordus");
+                    let wordexplain = $("#wordexplain");
+                    let wordsentence = $("#wordsentence");
+                    let wordphrase = $("#wordphrase");
+                    let wordspeak = $("#wordspeak");
+                    $.ajax({
+                        url: "/api/getcet6",
+                        type: "POST",
+                        data: {wordtype: "cet6"},
+                        success: function (data) {
+                            let synos = data.synos;
+                            let sentences = JSON.parse(JSON.stringify(data.sentences).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            let phrases = JSON.parse(JSON.stringify(data.phrases).replace(/'/g, '"').replace(/^"|"$/g, ''));
+                            // 单词词性解析
+                            let n = synos.split(",");
+                            let str = "";
+                            $.each(n, function (index, value) {
+                                let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                $.each(json, function (i) {
+                                    str = (i + ". " + json[i] + " ") + str;
+                                });
+                            });
+                            // 单词句子解析
+                            let newsentences = "例句：" + sentences.sContent + " " + sentences.sCn;
+                            // 单词短语解析
+                            let newphrases = "短语：" + phrases.pContent + " " + phrases.pCn;
+
+                            wordname.text(data.headword);
+                            worduk.text(data.ukphone);
+                            wordus.text(data.usphone);
+                            wordexplain.text(str);
+                            wordsentence.text(newsentences);
+                            wordphrase.text(newphrases);
+                            $("#wordukimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.ukspeech);
+                                wordspeak[0].play();
+                            });
+                            $("#wordusimg").click(function () {
+                                wordspeak.attr("src", "https://dict.youdao.com/dictvoice?audio="
+                                    + data.usspeech);
+                                wordspeak[0].play();
+                            });
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                }, 5000);
+                $("#cancelwordarousel").click(function () {
+                    clearInterval(time1);
+                    $("#wordarousel").attr("disabled", false);
+                });
+            });
+        });
+    </script>
+
+
+    <!--    以下复习 填空部分-->
+    <div class="top__tasks3" id="third">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <h1><span class="p-2 badge badge-success badge-pill">Review</span></h1>
+                <div class="fuxi">
+                    <p class="tip">请根据提示输入单词:</p>
+                    <input id="reviewword" type="text" class="wrword">
+                    <p class="tip">单词提示:</p>
+                    <div id="reviewwordtip" class="exword">
+                        <!------单词提示----->
+                    </div>
+                </div>
+                <div class="next">
+                    <center>
+                        <button id="reviewnext">NEXT</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <script>
+            let trueword = "";
+            $("#review").click(function () {
+                let reviewwordtip = $("#reviewwordtip");
+                $.ajax({
+                    url: "/api/getreviewwordmessage",
+                    type: "GET",
+                    success: function (data) {
+                        let synos = data.wordexplains;
+                        // 单词词性解析
+                        let n = synos.split(",");
+                        let str = "";
+                        $.each(n, function (index, value) {
+                            let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                            $.each(json, function (i) {
+                                str = (i + ". " + json[i] + " ") + str;
+                            });
+                        });
+                        trueword = data.word;
+                        reviewwordtip.text(str);
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+            $("#reviewnext").click(function () {
+                let reviewword = $("#reviewword").val();
+                let reviewwordtip = $("#reviewwordtip");
+                if (reviewword === "" || reviewword == null) {
+                    alert("请输入正确的单词，而不是留空！")
+                } else if (reviewword === trueword) {
+                    alert("填写正确！")
+                    $.ajax({
+                        url: "/api/getreviewupdatelearn",
+                        type: "POST",
+                        data: {word: reviewword},
+                        success: function (result) {
+                            $.ajax({
+                                url: "/api/getreviewwordmessage",
+                                type: "GET",
+                                success: function (data) {
+                                    let synos = data.wordexplains;
+                                    // 单词词性解析
+                                    let n = synos.split(",");
+                                    let str = "";
+                                    $.each(n, function (index, value) {
+                                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                        $.each(json, function (i) {
+                                            str = (i + ". " + json[i] + " ") + str;
+                                        });
+                                    });
+                                    trueword = data.word;
+                                    reviewwordtip.text(str);
+                                },
+                                error: function (e) {
+                                    alert(e);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    alert("不是这个单词哦！");
+                }
+            });
+
+        </script>
+
+    </div>
+
+
+    <!--    以下翻译部分-->
+    <div class="top__tasks3" id="fourth">
+        <div class="tasks__list">
+            <div class="itemsF">
+
+                <h1><span class="badge badge-success badge-pill">Translate</span></h1>
+                <div class="row">
+                    <div class="col">
+                        <textarea class="rounded border border-danger" cols="50"
+                                  style="width:370px; height:200px;font-size:18px; resize: none;border: none;outline: none"
+                                  rows="10" id="contactus1" name="contactus" placeholder="请输入你要翻译的内容..."
+                                  oninput='fromChange()'></textarea>
+                    </div>
+                    <div class="col">
+                    <textarea class="rounded border border-danger" cols="50"
+                              style="width: 390px; height: 200px; font-size:18px; resize: none;border: none;outline: none"
+                              rows="10" name="foo" id="write" readonly></textarea>
+                        <button class="btn btn-outline-success btn-sm" style="margin-left: 330px" onclick="copy()">复制
+                        </button>
+
+                    </div>
+                </div>
+                <br/><br/><br/><br/>
+                <script>
+
+                    $(document).on('textarea', '#contactus1', function () {
+                        console.log($("#contactus1").val());
+                    });
+
+                    function fromChange() {
+                        $.ajax({
+                            url: "/query/translate",
+                            type: "POST",
+                            data: {sentence: $("#contactus1").val()},
+                            success: function (data) {
+                                $("#write").text(data);
+                                // eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+
+                    }
+
+                </script>
+                <script>
+                    //复制功能
+                    function copyToClipboard(elem) {
+                        // create hidden text element, if it doesn't already exist
+                        var targetId = "_hiddenCopyText_";
+                        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+                        var origSelectionStart, origSelectionEnd;
+                        if (isInput) {
+                            // can just use the original source element for the selection and copy
+                            target = elem;
+                            origSelectionStart = elem.selectionStart;
+                            origSelectionEnd = elem.selectionEnd;
+                        } else {
+                            // must use a temporary form element for the selection and copy
+                            target = document.getElementById(targetId);
+                            if (!target) {
+                                var target = document.createElement("textarea");
+                                target.style.position = "absolute";
+                                target.style.left = "-9999px";
+                                target.style.top = "0";
+                                target.id = targetId;
+                                document.body.appendChild(target);
+                            }
+                            target.textContent = elem.textContent;
+                        }
+                        // select the content
+                        var currentFocus = document.activeElement;
+                        target.focus();
+                        target.setSelectionRange(0, target.value.length);
+
+                        // copy the selection
+                        var succeed;
+                        try {
+                            succeed = document.execCommand("copy");
+                        } catch (e) {
+                            succeed = false;
+                        }
+                        // restore original focus
+                        if (currentFocus && typeof currentFocus.focus === "function") {
+                            currentFocus.focus();
+                        }
+
+                        if (isInput) {
+                            // restore prior selection
+                            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+                        } else {
+                            // clear temporary content
+                            target.textContent = "";
+                        }
+                        return succeed;
+                    }
+
+
+                    function copy() {
+                        copyToClipboard(document.getElementById("write"));
+                        alert("复制成功！");
+                    }
+
+                </script>
+            </div>
+        </div>
+    </div>
+    <!--    以下收藏部分-->
+    <div class="top__tasks3" id="fifth">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <h1><span class="p-2 badge badge-success badge-pill">Favorites</span></h1><br/>
+                <div id="accordion">
+
+                    <div id="collectionlist"></div>
+
+                </div>
+
+                <script>
+                    $("#collect").click(function () {
+                        $("#collectionlist div").remove();
+                        $.ajax({
+                            url: "/api/getwordmessage",
+                            type: "GET",
+                            success: function (data) {
+                                let label1 = '<div class="card"><div class="card-header">';
+                                let label2 = '<a style="float: left;" class="card-link" data-toggle="collapse" href='
+                                let label4 = '><h4><b><p>';
+                                let label5 = '</p></b></h4></a></div>';
+                                let label6 = '<div id= ';
+                                let label7 = ' class="collapse" data-parent="#accordion"><div class="card-body"><p>';
+                                let label8 = '</p></div> </div> </div>';
+                                $.each(data, function (index, item) {
+                                    let n = item.wordexplain.split(",");
+                                    let str = "";
+                                    $.each(n, function (index, value) {
+                                        let json = JSON.parse(JSON.stringify(value).replace(/\'/g, '"').replace(/^\"|\"$/g, ''));
+                                        $.each(json, function (i) {
+                                            str = (i + ". " + json[i] + " ") + str;
+                                        });
+                                    });
+                                    $("#collectionlist").append(label1 + label2 + ("#collapse" + index) +
+                                        label4 + item.word + label5 + label6 + ("collapse" + index) + label7 +
+                                        str + label8
+                                    );
+                                });
+                                // console.log(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    });
+
+                </script>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--    以下成就部分-->
+    <div class="top__tasks3" id="sixth">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <div class="d-flex justify-content-between  mb-3">
+                    <h1><span class="p-2 badge badge-success badge-pill">Achievement</span></h1>
+                    <div class="p-2">
+                        <div class="spinner-grow text-success" style="background-color:lavender;"></div>
+                        <div class="spinner-grow text-info"></div>
+                        <div class="spinner-grow text-warning"></div>
+                        <div class="spinner-grow text-danger"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="card  col " style="background-color:lavender; height: 100px">
+                    <div class="card-body">
+                        <span>
+                            <h3 style="display: inline"><b style="display: inline">词汇等级：</b></h3>
+                            <h1 style="display: inline"><b><p style="display: inline ;
+                            font-size: 50px;color: #7465ce;text-shadow: #122b40 2px 2px 2px;margin-left: 200px "
+                                                              class="text-center glyphicon glyphicon-asterisk"
+                                                              id="achievewordname"
+                            ></p></b></h1>
+                        </span>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="card bg-info col text-white" style="height: 100px">
+                    <div class="card-body">
+                    <span>
+                            <h3 style="display: inline"><b style="display: inline">已学词汇量：</b></h3>
+                            <h1 style="display: inline"><b><p style="display: inline ;
+                            font-size: 50px;color: #26acef;text-shadow: #122b40 2px 2px 2px;margin-left: 170px;text-align-all: center "
+                                                              class="text-center glyphicon glyphicon-asterisk"
+                                                              id="achievestudyword"
+                            ></p></b></h1>
+                        </span>
+                    </div>
+                </div>
+                <br><br/>
+
+                <div class="card bg-warning col text-white" style="height: 100px">
+                    <div class="card-body">
+                    <span>
+                            <h3 style="display: inline"><b style="display: inline">未学词汇量：</b></h3>
+                            <h1 style="display: inline"><b><p style="display: inline ;
+                            font-size: 50px;color: #ea922f;text-shadow: #122b40 2px 2px 2px;margin-left: 170px;text-align-all: center "
+                                                              class="text-center glyphicon glyphicon-asterisk"
+                                                              id="achievenostudyword"
+                            ></p></b></h1>
+                        </span>
+                    </div>
+                </div>
+                <br><br>
+                <div class="card bg-danger col text-white" style="height: 100px">
+                    <div class="card-body">
+                    <span>
+                            <h3 style="display: inline"><b style="display: inline">当前成就：</b></h3>
+                            <h1 style="display: inline"><b><p style="display: inline ;
+                            font-size: 60px;color: #e8c5c5;text-shadow: #122b40 2px 2px 2px;margin-left: 135px;text-align-all: center"
+                                                              class="text-center glyphicon glyphicon-asterisk"
+                                                              id="achieverank"
+                            ></p></b></h1>
+                        </span>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+        <script>
+            $("#achievement").click(function () {
+                let achievewordname = $("#achievewordname");
+                let achievestudyword = $("#achievestudyword");
+                let achievenostudyword = $("#achievenostudyword");
+                let achieverank = $("#achieverank");
+                $.ajax({
+                    url: "/api/getrank",
+                    type: "GET",
+                    success: function (data) {
+                        achievewordname.text(data.wordname);
+                        achievestudyword.text(data.studywords);
+                        achievenostudyword.text(data.nostudywords);
+                        achieverank.text(data.rankname);
+                        console.log(data)
+                    },
+                    error: function (e) {
+                        achievewordname.text("Error");
+                        achievestudyword.text("Error");
+                        achievenostudyword.text("Error");
+                        achieverank.text("Error");
+                    }
+                });
+            });
+
+        </script>
+
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="query" class="modal-title">abundant</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <div style="width: auto ; height: 350px;">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <h4><span>US：</span><span id="usphonetic"></span></h4>
+                                <h4><span>UK：</span><span id="ukphonetic"></span></h4>
+                                <!--                                <h6>-->
+                                <ol id="explains"></ol>
+                                <!--                                </h6>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $("#queryword").click(function () {
+                let reg = /^[a-zA-Z]+$/;
+                let inputword = $("#input").val();
+                let query = $("#query");
+                let usphonetic = $('#usphonetic');
+                let ukphonetic = $("#ukphonetic");
+                $("#explains li").remove();
+                if (reg.test(inputword)) {
+                    $.ajax({
+                        url: "/query/word",
+                        type: "POST",
+                        data: {word: inputword},
+                        success: function (data) {
+                            query.text(data.query);
+                            usphonetic.text(data.usphonetic);
+                            ukphonetic.text(data.ukphonetic);
+                            let sapn1 = '<li>';
+                            let sapn2 = '</li>';
+                            $.each(data.explains, function (index, item) {
+                                $("#explains").append(sapn1 + item + sapn2);
+                            });
+                            console.log(data);
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                } else {
+                    alert("请输入英文单词！");
+                    query.text("null");
+                    usphonetic.text("null");
+                    ukphonetic.text("null");
+                }
+            });
+
+        </script>
+    </div>
+
+    <!-- QQ模态框 -->
+    <!--    <div class="modal fade" id="inputqq">-->
+    <!--        <div class="modal-dialog">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <h4 class="modal-title">填写你的QQ号修改头像</h4>-->
+    <!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+    <!--                </div>-->
+    <!--                &lt;!&ndash; 模态框主体 &ndash;&gt;-->
+    <!--                <div class="modal-body">-->
+    <!--                    <div style="width: auto ; height: 180px;">-->
+    <!--                        <div class="card bg-light-green text-white">-->
+    <!--                            <div class="card-body">-->
+    <!--                                <label for="inputqqs">QQ：</label>-->
+    <!--                                <input type="text" class="form-control" id="inputqqs" placeholder="输入您的QQ号">-->
+    <!--                                <div align="center">-->
+    <!--                                    <button id="getqq" type="button" class="btn btn-outline-success">确定</button>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <div class="top__tasks3" id="myspace">
+        <div class="tasks__list">
+            <div class="itemsF" id="myspace-itemsF">
+                <div id="userhead">
+                    <div style="" class="text-white"><img id="qqlogo"
+                                                          src="../images/logos.jpg"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="basic-information">
+                        <h2 style="">基本信息</h2>
+                    </div>
+                    <div style="margin: auto 12px;background-color: white;border-radius: 5px;">
+                        <table border="0" id="basic-information">
+                            <tr class="basic-information-tr">
+                                <td id=class="basic-information-td1">用户名：</td>
+                                <td id="user_name1">用户名</td>
+                            </tr>
+                            <tr class="basic-information-tr">
+                                <td class="basic-information-td1">登录邮箱：</td>
+                                <td id="qqemail"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                let username = $("#user_name1");
+                let email = $("#qqemail");
+                let homeusername = $("#homeusername");
+                let qqlogo = $("#qqlogo");
+                let homelogo = $("#homelogo");
+                $.ajax({
+                    url: "/api/getmessage",
+                    type: "GET",
+                    success: function (data) {
+                        username.text(data.username);
+                        homeusername.text(data.username);
+                        email.text(data.email);
+                        homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+                        qqlogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+                    },
+                    error: function (e) {
+                        username.text("null");
+                        email.text("null");
+                    }
+                });
+            });
+        </script>
+
+    </div>
+    <!--我的空间——个人信息-->
+
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+div {
+    cursor: url('../images/Arrow.cur'), default;
+}
+
+html {
+    cursor: url('../images/Arrow.cur'), default;
+}
+
+a:hover {
+    cursor: url("../images/Hand2.cur"), pointer;
+}
+
+button:hover {
+    cursor: url("../images/Hand.cur"), pointer;
+}
+
+img:hover {
+    cursor: url('../images/Arrow2.cur'), pointer;
+}
+
+p:hover {
+    cursor: url("../images/SizeAll.cur"), pointer;
+}
+
+input:hover {
+    cursor: url("../images/IBeam.cur"), pointer;
+}

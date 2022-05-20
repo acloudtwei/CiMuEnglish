@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>教师资格证</title>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/main.css" th:href="@{/css/main.css}">
+    <script src="../../static/js/shanbei.js" th:src="@{/js/shanbei.js}"></script>
+    <style>
+        .top__tasks22 {
+            display: block;
+            height: 600px;
+            width: 1170px;
+            padding-left: 300px;
+            /* background-color: #209   E85; */
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="nav__bar">
+    <div class="logo ">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+<!--        <button type="button" class="btn btn-info">-->
+<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--        </button>-->
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <a href="/Tmain" style="color: #c9e6e0;outline: none">首页</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tone" id="study" style="color: #c9e6e0;outline: none">科一</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Ttwo" id="review" style="color: #c9e6e0;outline: none">科二</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tcollect" id="collect" style="color: #c9e6e0;outline: none">收藏</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tziliao" id="achievement" style="color: #c9e6e0;outline: none">资料</a>
+        </li>
+    </ul>
+
+    <!--    <div class="help__btn">-->
+    <!--        <p>帮助</p>-->
+    <!--    </div>-->
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li  ><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let homeusername = $("#homeusername");
+        let homelogo = $("#homelogo");
+        $.ajax({
+            url: "/api/getmessage",
+            type: "GET",
+            success: function (data) {
+                homeusername.text(data.username);
+                homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+            },
+            error: function (e) {
+                username.text("null");
+                email.text("null");
+            }
+        });
+    });
+</script>
+
+<!--    以下资料部分-->
+<div class="container">
+    <div class="top__tasks22" id="sixth">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <h1><span class="p-2 badge badge-success badge-pill">Data</span></h1><br/>
+                <li class="list-group-item list-group-item-primary"><h5> 教资笔试真题_中学教育知识_2020下半年.pdf </h5>
+                    <button onclick="show()" id="download1" type="button" class="btn btn-outline-success">
+                        <a id="data1" th:href="@{/Tpdf/教资笔试真题_中学教育知识_2020下半年.pdf}"
+                           href="../../static/Tpdf/教资笔试真题_中学教育知识_2020下半年.pdf"
+                           download="教资笔试真题_中学教育知识_2020下半年.pdf">下载真题</a></button>
+                </li>
+                <li class="list-group-item list-group-item-primary"><h5> 教资笔试真题_中学教育知识_2021上半年.pdf </h5>
+                    <button onclick="show()" id="download2" type="button" class="btn btn-outline-success">
+                        <a id="data2" th:href="@{/Tpdf/教资笔试真题_中学教育知识_2021上半年.pdf}"
+                           href="../../static/Tpdf/教资笔试真题_中学教育知识_2021上半年.pdf"
+                           download="教资笔试真题_中学教育知识_2021上半年.pdf">下载真题</a></button>
+                </li>
+                <li class="list-group-item list-group-item-primary"><h5> 教资笔试真题_中学综合素质_2020下半年.pdf </h5>
+                    <button onclick="show()" id="download3" type="button" class="btn btn-outline-success">
+                        <a id="data3" th:href="@{/Tpdf/教资笔试真题_中学综合素质_2020下半年.pdf}"
+                           href="../../static/Tpdf/教资笔试真题_中学综合素质_2020下半年.pdf"
+                           download="教资笔试真题_中学综合素质_2020下半年.pdf">下载真题</a></button>
+                </li>
+                <li class="list-group-item list-group-item-primary"><h5>教资笔试真题_中学综合素质_2021上半年.pdf</h5>
+                    <button onclick="show()" id="download4" type="button" class="btn btn-outline-success">
+                        <a id="data4" th:href="@{/Tpdf/教资笔试真题_中学综合素质_2021上半年.pdf}"
+                           href="../../static/Tpdf/教资笔试真题_中学综合素质_2021上半年.pdf"
+                           download="教资笔试真题_中学综合素质_2021上半年.pdf">下载真题</a></button>
+                </li>
+
+            </div>
+
+            <script>
+                // $("#download").click()
+                // {
+                //     $.ajax({
+                //         url: "/file/downloadFile"
+                //
+                //     })
+                // }
+                //
+                // function show(){
+                //     $.ajax({
+                //         url: "/file/downloadFile"
+                //
+                //     })
+                // }
+            </script>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

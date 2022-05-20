@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>用户信息表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <link rel="stylesheet" th:href="@{/js/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label required">密码转化器</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="headword" lay-verify="required" lay-reqtext="请输入密码"
+                                       autocomplete="off" class="layui-input" id="freshid">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary layui-border-blue" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-iconlayui-icon-triangle-r"></i> 转 换
+                            </button>
+                        </div>
+                        <div class="layui-inline">
+                            <span class="layui-badge-rim">Success</span>
+                            <div class="layui-input-inline">
+                                <input type="text" name="topassword" style="border-color: white;"
+                                       class="layui-input" id="topassword" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="usertoolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="userTableId" lay-filter="userTableFilter"></table>
+
+        <script type="text/html" id="switchTpl">
+            <input type="checkbox" name="authoritys" value="{{d.authority}}" lay-skin="switch" lay-text="超级|普通"
+                   lay-filter="toauthority" {{
+                   d.authority== 1 ? 'checked' : '' }}>
+        </script>
+
+    </div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        layui.data('user', {
+            key: 'username'
+            , value: 'cimu'
+        });
+
+
+        table.render({
+            elem: '#userTableId',
+            url: '/twei/getusers',
+            method: "POST",
+            // contentType:"contentType: 'application/json'",
+            // done: function (res, curr, count) {
+            //     //如果是异步请求数据方式，res即为你接口返回的信息。
+            //     //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            //
+            //     layui.data('user', {
+            //         key: 'username'
+            //         , value: res.data
+            //     });
+            //
+            //     var localTest = layui.data('test');
+            //     console.log(localTest.nickname); //获得“ABC”
+            //     if(localTest.nickname===null)
+            //     {
+            //         console.log("aaa")
+            //     }
+            //     //得到当前页码
+            //     console.log(curr);
+            //
+            //     //得到数据总量
+            //     console.log(count);
+            // },
+            toolbar: '#usertoolbar',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'layui-table-tip',
+                icon: 'layui-icon-refresh-1'
+            }],
+            cols: [
+                [
+                    {type: "checkbox", width: 50},
+                    {field: 'username', title: '用户名', sort: true},
+                    {field: 'email', title: '邮箱'},
+                    {
+                        field: 'authority',
+                        // event: 'authority',
+                        title: '权限',
+                        style: 'cursor: pointer;',
+                        width: 100,
+                        templet: '#switchTpl',
+                        sort: true
+                    },
+                    {field: 'remarks', event: 'remarks', style: 'cursor: pointer;', title: '备注'},
+                    {field: 'registertime', title: '注册时间', minWidth: 150, sort: true},
+                ]
+            ],
+            limits: [5, 10, 15, 20],
+            limit: 5,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+
+            let index = layer.msg('正在转换密码【' + data.field.headword + '】，请稍后...', {
+                icon: 16,
+                time: false,
+                shade: 0
+            });
+            $.ajax({
+                url: '/twei/topassword',
+                type: "POST",
+                // contentType: "application/json; charset=utf-8",
+                data: {password: data.field.headword},
+                success: function (data) {
+                    $("#topassword").val(data.msg);
+                }
+            });
+            layer.close(index);
+            // 重要的是这个返回false，如果没有的话就会导致二次重载
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(userTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户【注意格式】',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    resize: true,
+                    area: ['50%', '50%'],
+                    content: encodeURI('/twei/adduser'),
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('userTableId')
+                    , data = checkStatus.data;
+                console.log(data)
+                var datausers = [];
+                $.each(data, function (index, value) {
+                    datausers.push(value.username)
+                });
+                layer.alert(
+                    "确定要删除这些用户嘛？\n" + datausers, {title: "重点提示！！！", icon: 7}, function (index) {
+                        $.ajax({
+                            url: '/twei/toalldelete',
+                            type: "POST",
+                            data: {username: datausers.toString()},
+                            success: function (data) {
+                                layer.msg(data.msg);
+                                table.reload('userTableId');
+                                layer.close(index);
+                            }
+                        });
+                    });
+
+            } else if (obj.event === 'layui-table-tip') {
+                table.reload('userTableId', {
+                    page: {
+                        curr: 1
+                    }
+                })
+            }
+        });
+
+        form.on('switch(toauthority)', function (result) {
+            // true 1
+            // false 0
+            table.on('row(userTableFilter)', function (obj) {
+
+                // 这个监听是先获取到当前行的数据，然后第二次监听才开始获取按钮的数据
+                if (result.elem.checked === true) {
+                    obj.data.authority = 1;
+                } else {
+                    obj.data.authority = 0;
+                }
+                console.log(result)
+                $.ajax({
+                    url: '/twei/toauthority',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(obj.data),
+                    success: function (data) {
+                        layer.msg(data.msg, {icon: 1, time: 800});
+                    }
+                });
+                console.log(obj.data)
+            })
+
+        });
+
+
+        table.on('tool(userTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'remarks') {
+                layer.prompt({
+                    formType: 2
+                    , title: '用户备注修改!'
+                    , value: data.remarks
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/tomodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {username: data.username, item: value},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    remarks: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
+</script>
+<script type="text/javascript" th:src="@{/js/lines.js}"></script>
+</body>
+</html>

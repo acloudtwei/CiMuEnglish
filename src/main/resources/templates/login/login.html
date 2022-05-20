@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <!--    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>-->
+    <!--    <script type="text/javascript" src="../static/js/F12.js" th:src="@{/js/F12.js}"></script>-->
+    <style>
+        /** {*/
+        /*    padding: 0;*/
+        /*    margin: 0;*/
+        /*}*/
+
+        button {
+            width: 300px;
+            line-height: 30px;
+        }
+
+        .box {
+            margin: 0 auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 420px;
+            width: 300px;
+            margin-left: -150px;
+            margin-top: -210px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 25px;
+            display: none;
+            z-index: 2;
+        }
+
+        .top-s {
+            font-size: 12px;
+            color: #ccc;
+            display: block;
+            text-align: center;
+            margin-left: 25px;
+            margin-top: 25px;
+            margin-bottom: 5px;
+        }
+
+        .top-x {
+            font-size: 18px;
+            color: black;
+            display: block;
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .cuo {
+            float: right;
+            margin-right: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .logo {
+            width: 100px;
+            height: 43px;
+            padding-top: 10px;
+            cursor: Default;
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!--顶部菜单栏-->
+<div class="ui fixed inverted menu" style="background-color: #209e85;height: 54px">
+    <div class="ui container">
+        <div class="logo">
+            <a href="/home">
+                <img src="../images/home.jpg" th:href="@{images/home.jpg}"
+                     style="width: 25px;height: 25px; "></a>
+
+        </div>
+        <div class="right menu">
+
+            <a onclick="register()" class="item" target="_blank"></a>
+        </div>
+    </div>
+    <script>
+        function register() {
+            window.location.assign("/user/register");
+        }
+    </script>
+</div>
+<!--顶部菜单栏结束-->
+
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column" style="height: 350px">
+        <h2 class="ui teal image header">
+            <img th:src="@{/images/logos.jpg}" class="image">
+            <div class="content">
+                登录账号
+            </div>
+        </h2>
+        <div class="ui large form">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input id="username" type="text" name="username" placeholder="请输入用户名或邮箱">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password" type="password" name="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div id="login" class=" ui fluid large teal submit button">登录
+                </div>
+                <script>
+                    $(document).keydown(function (event) {
+                        if (event.keyCode === 13) {
+                            $('#login').triggerHandler('click');
+                        }
+                    });
+                </script>
+            </div>
+            <div class="box">
+                <img th:src="@{/images/cw.png}" class="cuo">
+                <span class="top-s">身份验证</span>
+                <span class="top-x">拖动滑块，使图片角度为正</span>
+                <div id="rotateWrap1">
+                    <div class="rotateverify-contaniner">
+                        <div class="rotate-can-wrap">
+                            <canvas class="rotateCan rotate-can" width="200" height="200"></canvas>
+                            <div class="statusBg status-bg"></div>
+                        </div>
+                        <div class="control-wrap slideDragWrap">
+                            <div class="control-tips">
+                                <p class="c-tips-txt cTipsTxt">滑动将图片转正</p>
+                            </div>
+                            <div class="control-bor-wrap controlBorWrap"></div>
+                            <div class="control-btn slideDragBtn">
+                                <i class="control-btn-ico"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui message">
+                还没有账号？
+                <a onclick="register()" target="_blank" style="padding-right:60px;">去注册</a>
+                <a onclick="findpassword()" target="_blank" style="padding-left:60px;">忘记密码</a>
+            </div>
+            <script>
+                function findpassword() {
+                    window.location.assign("/user/findpassword");
+                }
+            </script>
+            <div class="ui error message"></div>
+        </div>
+
+    </div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+
+<script>
+
+    // let url4 = document.location;
+    //
+    // console.log(url4.host)
+
+    // 加一个div全部 然后设置display：block；
+
+    $('#login').click(function () {
+        let username = $("#username").val();
+        let password = $("#password").val();
+        if (username === "" || username == null) {
+            alert("请输入用户名/邮箱！")
+        } else if (password === "" || password == null) {
+            alert("请输入密码！")
+        } else {
+            $.ajax({
+                url: "/api/login",
+                type: "POST",
+                data: {username: username, password: password},
+                success: function (result) {
+                    layui.data('user', {
+                        key: 'usermessage'
+                        , value: result.data
+                    });
+                    eval(result.data.message);
+                },
+                error: function (e) {
+                    layer.msg("登录失败！", {icon: 2});
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

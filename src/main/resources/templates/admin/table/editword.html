@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>单词编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <link rel="stylesheet" th:href="@{/js/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">序号</label>
+        <div class="layui-input-block">
+            <input type="number" name="wordrank" value="" style="border-color:white;" id="id"
+                   class="layui-input" disabled>
+            <!--            <tip>序号可以随意填写，但是尽量不填！</tip>-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">单词</label>
+        <div class="layui-input-block">
+            <input type="text" name="headword" value="" style="border-color:white;" id="word"
+                   class="layui-input" disabled>
+            <tip>此单词是你要修改的那个单词!</tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">美式发音</label>
+        <div class="layui-input-block">
+            <input type="text" name="usphone" placeholder="请输入美式发音" value=""
+                   class="layui-input">
+            <!--                        <tip>短语可以不填，但是不能修改默认的短语格式！</tip>-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">美式发音接口</label>
+        <div class="layui-input-block">
+            <input type="text" name="usspeech" placeholder="请输入美式发音接口" value=""
+                   class="layui-input">
+            <!--            <tip>短语可以不填，但是不能修改默认的短语格式！</tip>-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">英式发音</label>
+        <div class="layui-input-block">
+            <input type="text" name="ukphone" placeholder="请输入英式发音" value=""
+                   class="layui-input">
+            <!--            <tip>短语可以不填，但是不能修改默认的短语格式！</tip>-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">英式发音接口</label>
+        <div class="layui-input-block">
+            <input type="text" name="ukspeech" placeholder="请输入英式发音接口" value=""
+                   class="layui-input">
+            <!--            <tip>短语可以不填，但是不能修改默认的短语格式！</tip>-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        let dataobject = JSON.parse(decodeURI(document.URL).split('?')[1].split("=")[1]);
+        $("#id").val(dataobject.id);
+        $("#word").val(dataobject.word);
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息',
+                icon: 1
+            }, function () {
+
+                console.log(data.field)
+                $.ajax({
+                    url: '/twei/' + dataobject.keyword,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data.field),
+                    success: function (data) {
+                        layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                        });
+                        if (data.code === 200) {
+                            layer.close(index);
+                        }
+                    }
+                });
+            });
+            return false;
+        });
+
+        form.verify({
+            wordjudge: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!(/^[a-zA-Z]+$/.test(value))) {
+                    return '必须填写的是单词';
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

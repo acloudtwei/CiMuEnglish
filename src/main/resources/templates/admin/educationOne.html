@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>科一题库表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <link rel="stylesheet" th:href="@{/js/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label required">关键字</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="headword" lay-verify="required|text" lay-reqtext="可以填写题目的关键字"
+                                       autocomplete="off" class="layui-input" id="freshid">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary layui-border-green" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon layui-icon-search"></i> 搜 索
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-border-blue"
+                                    id="data-fresh-btn"><i class="layui-icon layui-icon-refresh-1"></i> 刷 新
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="Tonetoolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="ToneTableId" lay-filter="ToneTableFilter"></table>
+
+    </div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#ToneTableId',
+            url: '/twei/getTone',
+            method: "POST",
+            // contentType:"contentType: 'application/json'",
+            toolbar: '#Tonetoolbar',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'layui-table-tip',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                    {type: "checkbox", width: 50},
+                    {field: 'trank', title: '序号', sort: true},
+                    {field: 'eg', event: 'eg', minWidth: 300, style: 'cursor: pointer;', title: '题目', sort: true},
+                    {field: 'optiona', event: 'optiona', minWidth: 50, style: 'cursor: pointer;', title: 'A选项'},
+                    {field: 'optionb', event: 'optionb', minWidth: 50, style: 'cursor: pointer;', title: 'B选项'},
+                    {field: 'optionc', event: 'optionc', minWidth: 50, style: 'cursor: pointer;', title: 'C选项'},
+                    {field: 'optiond', event: 'optiond', minWidth: 50, style: 'cursor: pointer;', title: 'D选项'},
+                    {field: 'rights', event: 'rights', minWidth: 50, style: 'cursor: pointer;', title: '正确答案'},
+                    {field: 'analysis', event: 'analysis', minWidth: 300, style: 'cursor: pointer;', title: '解析'}
+                ]
+            ],
+            limits: [5, 10, 15, 20],
+            limit: 5,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+
+            let index = layer.msg('正在查询关键字为【' + data.field.headword + '】的题目，请稍后...', {icon: 16, time: false, shade: 0});
+
+            setTimeout(function () {
+                table.reload('ToneTableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        one: data.field.headword
+                    }
+                })
+                layer.close(index);
+            }, 800);
+
+            // 重要的是这个返回false，如果没有的话就会导致二次重载
+            return false;
+        });
+
+        // 刷新的按钮实现
+        $("#data-fresh-btn").click(function () {
+            table.reload('ToneTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    one: ""
+                }
+            })
+            $("#freshid").val("");
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(ToneTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户【注意格式】',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    resize: true,
+                    area: ['50%', '50%'],
+                    content: encodeURI('/twei/addeducation?value=Toneadd'),
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('ToneTableId')
+                    , data = checkStatus.data;
+                // console.log(data)
+                var datawords = [];
+                $.each(data, function (index, value) {
+                    datawords.push(value.trank)
+                });
+                layer.alert(
+                    "确定要删除这些题目嘛？\n" + datawords, {title: "重点提示", icon: 7}, function (index) {
+                        $.ajax({
+                            url: '/twei/Tonedelete',
+                            type: "POST",
+                            data: {one: datawords.toString()},
+                            success: function (data) {
+                                layer.msg(data.msg);
+                                table.reload('ToneTableId');
+                                layer.close(index);
+
+                            }
+                        });
+                    });
+
+            } else if (obj.event === 'layui-table-tip') {
+                layer.alert('注意！注意！数据很重要，删除需谨慎！', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+                    , anim: 4 //动画类型
+                });
+            }
+        });
+
+        //监听表格复选框选择，只是显示可不用
+        // table.on('checkbox(ToneTableFilter)', function (obj) {
+        //     console.log(obj)
+        // });
+
+        // 单元格监听
+        table.on('tool(ToneTableFilter)', function (obj) {
+            let data = obj.data;
+            if (obj.event === 'eg') {
+                layer.prompt({
+                    formType: 2
+                    , title: '修改题目!'
+                    , value: data.eg
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "eg"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    eg: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'optiona') {
+                layer.prompt({
+                    formType: 2
+                    , title: '只需要修改【A.】后面的答案!'
+                    , value: data.optiona
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "optiona"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    optiona: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'optionb') {
+                layer.prompt({
+                    formType: 2
+                    , title: '只需要修改【B.】后面的答案!'
+                    , value: data.optionb
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "optionb"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    optionb: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'optionc') {
+                layer.prompt({
+                    formType: 2
+                    , title: '只需要修改【C.】后面的答案!'
+                    , value: data.optionc
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "optionc"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    optionc: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'optiond') {
+                layer.prompt({
+                    formType: 2
+                    , title: '只需要修改【D.】后面的答案!'
+                    , value: data.optiond
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "optiond"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    optiond: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'rights') {
+                layer.prompt({
+                    formType: 2
+                    , title: '只需要修改为一个大写英文字母即可!!!'
+                    , value: data.rights
+                }, function (value, index) {
+
+                    if ((/^[A-D]+$/.test(value)) && value.length === 1) {
+                        $.ajax({
+                            url: '/twei/Tonemodify',
+                            type: "POST",
+                            // contentType: "application/json; charset=utf-8",
+                            data: {one: data.trank, item: value, keyword: "rights"},
+                            success: function (data) {
+                                layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                    obj.update({
+                                        rights: value
+                                    });
+                                });
+                                if (data.code === 200) {
+                                    layer.close(index);
+                                }
+                            }
+                        });
+                    } else {
+                        layer.msg("请输入一一个大写的A-D英文字母！");
+                    }
+                });
+            } else if (obj.event === 'analysis') {
+                layer.prompt({
+                    formType: 2
+                    , title: '输入一个新的解析!'
+                    , value: data.analysis
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/Tonemodify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {one: data.trank, item: value, keyword: "analysis"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    analysis: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        // form.verify({
+        //     wordjudge: function (value, item) { //value：表单的值、item：表单的DOM对象
+        //         if (!(/^[a-zA-Z]+$/.test(value))) {
+        //             return '必须填写的是单词';
+        //         }
+        //     }
+        // });
+
+    });
+</script>
+<script type="text/javascript" th:src="@{/js/lines.js}"></script>
+</body>
+</html>

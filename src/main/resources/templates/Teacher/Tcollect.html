@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>教师资格证</title>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/main.css" th:href="@{/css/main.css}">
+    <script src="../../static/js/shanbei.js" th:src="@{/js/shanbei.js}"></script>
+
+    <style>
+        .top__tasks33
+        {
+            display: block;
+            height: 600px;
+            width: 1170px;
+            padding-left: 300px;
+            /* background-color: #209   E85; */
+        }
+    </style>
+</head>
+
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+        <!--        <a type="button" class="btn btn-info" onclick="returnhome()" href="/home">-->
+<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--        </a>-->
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <a href="/Tmain" style="color: #c9e6e0;outline: none">首页</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tone" id="study"  style="color: #c9e6e0;outline: none">科一</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Ttwo" id="review"  style="color: #c9e6e0;outline: none">科二</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tcollect" id="collect"  style="color: #c9e6e0;outline: none">收藏</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tziliao" id="achievement" style="color: #c9e6e0;outline: none">资料</a>
+        </li>
+    </ul>
+
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li  ><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let homeusername = $("#homeusername");
+        let homelogo = $("#homelogo");
+        $.ajax({
+            url: "/api/getmessage",
+            type: "GET",
+            success: function (data) {
+                homeusername.text(data.username);
+                homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+            },
+            error: function (e) {
+                username.text("null");
+                email.text("null");
+            }
+        });
+    });
+</script>
+
+
+<!--    以下收藏部分-->
+<div class="container">
+    <div class="top__tasks33" id="fifth">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <h1><span class="p-2 badge badge-success badge-pill">Favorites</span></h1><br/>
+                <div id="accordion">
+
+                    <div id="collectionlist">
+
+                    </div>
+
+                </div>
+
+                <script>
+                    $(document).ready(function () {
+                        $("#collectionlist div").remove();
+                        $.ajax({
+                            url: "/collect/Tcoll",
+                            type: "GET",
+                            contentType:"application/json;charset=UTF-8",
+                            success: function (data) {
+                                // alert(data.data[0].username);
+                                // alert(data.data[0].Cright);
+                                let label1 = '<div class="card"><div class="card-header">';
+                                let label2 = '<a style="float: left;" class="card-link" data-toggle="collapse" href='
+                                let label4 = '><h4><b><p>';
+                                let label5 = '</p></b></h4></a></div>';
+                                let label6 = '<div id= ';
+                                let label7 = ' class="collapse" data-parent="#accordion"><div class="card-body"><p><h6>';
+                                let label8 = '</h6></p></div> </div> </div>';
+
+                                $.each(data, function (index, item) {
+                                  // "正确答案为：" + item.Cright +
+                                        let str = "    解析： " + item.analysis;
+                                        if(item.analysis == undefined){
+                                            return ;
+                                        }
+                                    $("#collectionlist").append(label1 + label2 + ("#collapse" + index) +
+                                        label4 + item.eg + label5 + label6 + ("collapse" + index) + label7 +
+                                        str + label8
+                                    );
+                                });
+                                // console.log(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/twei/welcome"
+  },
+  "logoInfo": {
+    "title": "",
+    "image": "../images/xiao.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页",
+          "href": "/twei/welcome",
+          "icon": "fa fa-tachometer",
+          "target": "_self"
+        },
+        {
+          "title": "单词管理",
+          "href": "",
+          "icon": "fa fa-align-justify",
+          "target": "_self",
+          "child": [
+            {
+              "title": "初中单词管理",
+              "href": "/twei/chuzhongtable",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            },
+            {
+              "title": "高中单词管理",
+              "href": "/twei/gaozhongtable",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            },
+            {
+              "title": "四级单词管理",
+              "href": "/twei/cet4table",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            },
+            {
+              "title": "六级单词管理",
+              "href": "/twei/cet6table",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "教资题库管理",
+          "href": "",
+          "icon": "fa fa-list-alt",
+          "target": "_self",
+          "child": [
+            {
+              "title": "科一题库",
+              "href": "/twei/educationOne",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            },
+            {
+              "title": "科二题库",
+              "href": "/twei/educationTwo",
+              "icon": "fa fa-file-text",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "系统管理",
+          "icon": "fa fa-lemon-o",
+          "href": "",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户管理  ",
+              "href": "/twei/usertable",
+              "icon": "fa fa-address-card-o",
+              "target": "_self"
+            },
+            {
+              "title": "druid数据连接池",
+              "href": "/druid",
+              "icon": "fa fa-battery",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

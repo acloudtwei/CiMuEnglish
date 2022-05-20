@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>教师资格证</title>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/Tmain.css" th:href="@{/css/Tmain.css}">
+
+</head>
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+<!--        <a type="button" class="btn btn-info" href="/home">-->
+<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</a>-->
+
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <form action="/Tmain" method="post">
+                <button>首页</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="/Tone" method="post">
+                <button id="study">科一</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="/Ttwo" method="post">
+                <button id="review">科二</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="/Tcollect" method="post">
+                <button id="collect">收藏</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="/Tziliao" method="post">
+                <button id="achievement">资料</button>
+            </form>
+        </li>
+    </ul>
+
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!------以下首页部分------>
+    <div class="top__tasks" id="first">
+        <ul class="tasks__list">
+            <div style="padding-left: 240px">
+                <li class="items">
+                    <div class="images3">
+
+                    </div>
+
+                    <div class="bottom__item">
+                        <div class="item__study">
+                            <form action="/Tone" method="post">
+                                <button id="cet4">特训</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="items">
+                    <div class="images4">
+                    </div>
+                    <div class="bottom__item">
+                        <div class="item__study">
+                            <form action="/Ttwo" method="post">
+                                <button id="cet6">特训</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </ul>
+
+
+    </div>
+    <div class="mid__inf" id="firstF">
+        <div class="left__sentence">
+            <div class="top__days">
+                <div class="days">
+                    <b><p>加油！教资人！</p></b>
+                </div>
+            </div>
+            <div class="mid__sentence">
+                <div class="left__user__img">
+                    <!--                    <img src="../images/user_img.png">-->
+                </div>
+                <div class="right__sentence">
+                    <div class="horn">
+                    </div>
+                    <div class="main__sentence">
+                        <div class="en__s">
+                            <p>圣人与常人之间往往只相差一步，而这一小步却往往</p><br>
+                        </div>
+                        <div class="ch__s">
+                            <p>需要非凡的毅力才能赶上。</p>
+                        </div>
+                        <div class="author">
+                            <p> ---- "CLMTW"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right__recommend">
+            <div class="top__recommend__title">
+                <p>今日推荐</p>
+            </div>
+            <div class="recommend__content">
+                <div class="recommend__img">
+                    <img src="../images/2fbe161f6e6d441d515b80f47f0c9333f60a77cbd793e430c1d8a5a505543d91.png" alt="">
+                </div>
+                <div class="recommend__inf">
+                    <div class="inf__title">
+                        <p>
+                            想改变的人都在这里
+                        </p>
+                    </div>
+                    <div class="inf__content">
+                        <p>每天千万人互相鞭策<br>
+                            陪你一起改变 共同成长<br>
+                            还有负责的组长监督和鼓励<br>
+                            英语学习的道路上你不是孤军奋战<br>
+                            来结识适合你的那群人吧(ง •̀_•́)ง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let homeusername = $("#homeusername");
+            let homelogo = $("#homelogo");
+            $.ajax({
+                url: "/api/getmessage",
+                type: "GET",
+                success: function (data) {
+                    homeusername.text(data.username);
+                    homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+                },
+                error: function (e) {
+                    username.text("null");
+                    email.text("null");
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

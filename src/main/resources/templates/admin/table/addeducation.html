@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>添加题目</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <link rel="stylesheet" th:href="@{/js/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">题目</label>
+        <div class="layui-input-block">
+            <input type="text" name="eg" lay-verify="required|text" lay-reqtext="必须填写文字！" placeholder="请输入题目"
+                   value=""
+                   class="layui-input">
+<!--            <tip>题目！</tip>-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">A选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="optiona" lay-verify="required|text" lay-reqtext="必须填写文字" placeholder="A选项为..."
+                   value=""
+                   class="layui-input">
+            <tip>请正常填写A选项的值</tip>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">B选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="optionb" lay-verify="required|text" lay-reqtext="必须填写文字" placeholder="B选项为..."
+                   value=""
+                   class="layui-input">
+            <tip>请正常填写B选项的值</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">C选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="optionc" lay-verify="required|text" lay-reqtext="必须填写文字" placeholder="C选项为..."
+                   value=""
+                   class="layui-input">
+            <tip>请正常填写C选项的值</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">D选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="optiond" lay-verify="required|text" lay-reqtext="必须填写文字" placeholder="D选项为..."
+                   value=""
+                   class="layui-input">
+            <tip>请正常填写D选项的值</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">正确答案</label>
+        <div class="layui-input-block">
+            <input type="text" name="rights" lay-verify="required|answerjudge" lay-reqtext="必须填写大写字母" placeholder="填写大写字母！"
+                   value=""
+                   class="layui-input">
+            <tip>只能填写一个大写的英文字母！</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">解析</label>
+        <div class="layui-input-block">
+            <input type="text" name="analysis" placeholder="填写题目答案解析！"
+                   value=""
+                   class="layui-input">
+            <tip>如果题目没有答案解析可不填！</tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        let keyword = decodeURI(document.URL).split('?')[1].split("=")[1];
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息',
+                icon: 1
+            }, function (index) {
+                let params={
+                    trank:"",
+                    eg:data.field.eg,
+                    optiona:"A."+data.field.optiona,
+                    optionb:"B."+data.field.optionb,
+                    optionc:"C."+data.field.optionc,
+                    optiond:"D."+data.field.optiond,
+                    rights:data.field.rights,
+                    analysis:data.field.analysis
+                }
+                console.log(params)
+                console.log(keyword)
+                $.ajax({
+                    url: '/twei/' + keyword,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(params),
+                    success: function (data) {
+                        layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                        });
+                        if (data.code === 200) {
+                            layer.close(index);
+                        }
+                    }
+                });
+            });
+            return false;
+        });
+
+        form.verify({
+            answerjudge: function (value, item) { //value：表单的值、item：表单的DOM对象
+                    if (!(/^[A-D]+$/.test(value))) {
+                    return '必须填写的是A-D的大写字母';
+                }
+                    if(value.length !==1)
+                    {
+                        return '请输入一个大写英文字母！';
+                    }
+            }
+        });
+    });
+</script>
+</body>
+</html>

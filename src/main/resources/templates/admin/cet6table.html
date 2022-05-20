@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>六级单词表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <link rel="stylesheet" th:href="@{/js/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label required">单词</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="headword" lay-verify="required|wordjudge" lay-reqtext="必须填写单词"
+                                       autocomplete="off" class="layui-input" id="freshid">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary layui-border-green" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon layui-icon-search"></i> 搜 索
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-border-blue"
+                                    id="data-fresh-btn"><i class="layui-icon layui-icon-refresh-1"></i> 刷 新
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="cet6toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="cet6TableId" lay-filter="cet6TableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script th:src="@{/js/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#cet6TableId',
+            url: '/twei/getcet6words',
+            method: "POST",
+            // contentType:"contentType: 'application/json'",
+            toolbar: '#cet6toolbar',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'layui-table-tip',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                    {type: "checkbox", width: 50},
+                    {field: 'wordrank', title: '序号', sort: true},
+                    {field: 'headword', title: '单词', sort: true},
+                    {field: 'sentences', event: 'sentence', style: 'cursor: pointer;', title: '例句'},
+                    {field: 'phrases', event: 'phrase', style: 'cursor: pointer;', title: '短语'},
+                    {field: 'usphone', title: '美式发音', minWidth: 150},
+                    {field: 'usspeech', title: '美式发音接口'},
+                    {field: 'ukphone', title: '英式发音'},
+                    {field: 'ukspeech', title: '英式发音接口'},
+                    {field: 'synos', event: 'syno', style: 'cursor: pointer;', title: '词性', sort: true},
+                    {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                ]
+            ],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 10,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+
+            let index = layer.msg('正在查询单词【' + data.field.headword + '】，请稍后...', {icon: 16, time: false, shade: 0});
+
+            setTimeout(function () {
+                table.reload('cet6TableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        word: data.field.headword
+                    }
+                })
+                layer.close(index);
+            }, 800);
+
+            // 重要的是这个返回false，如果没有的话就会导致二次重载
+            return false;
+        });
+
+        $("#data-fresh-btn").click(function () {
+            table.reload('cet6TableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    word: ""
+                }
+            })
+            $("#freshid").val("");
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(cet6TableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户【注意格式】',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    resize: true,
+                    area: ['50%', '50%'],
+                    content: encodeURI('/twei/addword?value=cet6addword'),
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('cet6TableId')
+                    , data = checkStatus.data;
+                console.log(data)
+                var datawords = [];
+                $.each(data, function (index, value) {
+                    datawords.push(value.headword)
+                });
+                layer.alert(
+                    "确定要删除这些单词嘛？\n" + datawords, {title: "重点提示", icon: 7}, function (index) {
+                        $.ajax({
+                            url: '/twei/cet6alldelete',
+                            type: "POST",
+                            data: {words: datawords.toString()},
+                            success: function (data) {
+                                layer.msg(data.msg);
+                                table.reload('cet6TableId');
+                                layer.close(index);
+
+                            }
+                        });
+                        // table.reload('cet6TableId', {
+                        //     url: 'http://127.0.0.1:8080/twei/cet6alldelete',
+                        //     method: "POST",
+                        //     page: {
+                        //         curr: 1
+                        //     }
+                        //     , where: {
+                        //         words: datawords.toString()
+                        //     }
+                        // })
+                        // layer.close(index);
+                    });
+
+            } else if (obj.event === 'layui-table-tip') {
+                layer.alert('注意！注意！例句、短语、词性的修改要按照格式哈！', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+                    , anim: 4 //动画类型
+                });
+            }
+        });
+
+        //监听表格复选框选择，只是显示可不用
+        // table.on('checkbox(cet6TableFilter)', function (obj) {
+        //     console.log(obj)
+        // });
+
+        table.on('tool(cet6TableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+
+                var index = layer.open({
+                    title: '编辑用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    resize: true,
+                    area: ['50%', '50%'],
+                    content: encodeURI('/twei/editword?value=' + '{' + '"' + 'id' + '"' + ':' + '"' + data.wordrank +
+                        '"' + ',' + '"' + 'keyword' + '"' + ':' + '"' + 'cet6update' +
+                        '"' + ',' + '"' + 'word' + '"' + ':' + '"' + data.headword + '"' + '}'),
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('真的删除?想好了没', function (index) {
+                    console.log(data)
+                    $.ajax({
+                        url: '/twei/cet6alldelete',
+                        type: "POST",
+                        data: {words: data.headword},
+                        success: function (data) {
+                            layer.msg(data.msg);
+                            table.reload('cet6TableId');
+                            layer.close(index);
+                            obj.del();
+                        }
+                    });
+                });
+            } else if (obj.event === 'sentence') {
+                layer.prompt({
+                    formType: 2
+                    , title: '请严格按照格式进行修改!!!'
+                    , value: data.sentences
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/cet6modify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {word: data.headword, item: value, keyword: "sentences"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    sentences: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'phrase') {
+                layer.prompt({
+                    formType: 2
+                    , title: '请严格按照格式进行修改!!!'
+                    , value: data.phrases
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/cet6modify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {word: data.headword, item: value, keyword: "phrase"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    phrases: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'syno') {
+                layer.prompt({
+                    formType: 2
+                    , title: '请严格按照格式进行修改!!!'
+                    , value: data.synos
+                }, function (value, index) {
+                    $.ajax({
+                        url: '/twei/cet6modify',
+                        type: "POST",
+                        // contentType: "application/json; charset=utf-8",
+                        data: {word: data.headword, item: value, keyword: "syno"},
+                        success: function (data) {
+                            layer.msg(data.msg, {icon: 1, time: 800}, function () {
+                                obj.update({
+                                    synos: value
+                                });
+                            });
+                            if (data.code === 200) {
+                                layer.close(index);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        form.verify({
+            wordjudge: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!(/^[a-zA-Z]+$/.test(value))) {
+                    return '必须填写的是单词';
+                }
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

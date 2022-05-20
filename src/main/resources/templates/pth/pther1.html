@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/css/Tmain.css" th:href="@{/css/Tmain.css}">
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <link rel="stylesheet" th:href="@{bootstrap-4.6.1-dist/css/bootstrap.min.css}">
+    <script th:src="@{js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script th:src="@{bootstrap-4.6.1-dist/js/bootstrap.min.js}"></script>
+    <meta name="viewport" content="width=device-width,  initial-scale=1.0,    maximum-scale=1.0,  user-scalable=no">
+    <title>普通话</title>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/getpther1",
+                dataType: 'json',
+                success: function (data) {
+                    $("h2").append("<h2>"+data.name+"</h2>");
+                    $("audio").append("            <source src=\"" + data.path + "/1.mp3\" type=\"audio/ogg\">\n" +
+                        "            <source src=\"" + data.path + "/1.mp3\" type=\"audio/mpeg\">")
+                    $(".images").append("<img src=\"" + data.path + "/1.png\" class=\"mx-auto d-block img-fluid\" style=\"margin-top: 50px\">");
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            })
+        })
+    </script>
+
+</head>
+<body style="background: white">
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}"
+                              style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+        <!--        <a type="button" class="btn btn-info" href="/home">-->
+        <!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</a>-->
+
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <form action="topthindex">
+                <button>首页</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="topthword0">
+                <button>读字词</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="topther0">
+                <button>儿化音</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="topthartice0">
+                <button>朗读</button>
+            </form>
+        </li>
+        <li class="nav__main">
+            <form action="topthdata0">
+                <button>资料</button>
+            </form>
+        </li>
+    </ul>
+
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let homeusername = $("#homeusername");
+        let homelogo = $("#homelogo");
+        $.ajax({
+            url: "/api/getmessage",
+            type: "GET",
+            success: function (data) {
+                homeusername.text(data.username);
+                homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+            },
+            error: function (e) {
+                username.text("null");
+                email.text("null");
+            }
+        });
+    });
+</script>
+<h2 style="text-align: center;margin-top: 50px"></h2>
+<div style="text-align: center;margin-top: 50px">
+    <audio controls style="width: 300px;height: 100px">
+    </audio>
+</div>
+<div class="images">
+</div>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>大学生考证辅助平台</title>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css"/>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+    <link rel="stylesheet" href="../static/css/home.css" th:href="@{css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+</head>
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}"
+                              style="width: 25px;height: 25px; padding-top: 5px;"></a>
+    </div>
+    <div class="login__btn">
+
+        <div class="user__login__img">
+            <a href="/myspace"><img id="homelogo" th:src="@{/images/wuwu.png}"/></a>
+        </div>
+
+        <!--        <div class="user__name">-->
+        <!--            <div class="name">-->
+        <!--                <span id="homeusername"></span>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let homelogo = $("#homelogo");
+        $.ajax({
+            url: "/api/getmessage",
+            type: "GET",
+            success: function (data) {
+                homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+            },
+            error: function (e) {
+            }
+        });
+    });
+</script>
+<!-- Swiper -->
+<section class="pc-banner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-center none-effect">
+                <a href="/Tmain"><img src="../static/images/teach.jfif" th:src="@{images/teach.jfif}"
+                                      style="width: 527px;height: 300px;"></a></div>
+            <div class="swiper-slide">
+                <a href="/main"><img src="../static/images/cet46.jfif" th:src="@{images/cet46.jfif}"
+                                     style="width: 527px;height: 300px;"></a></div>
+            <div class="swiper-slide">
+                <a href="/topthindex"> <img src="../static/images/pth.jpeg" th:src="@{images/pth.jpeg}"
+                                            style="width: 527px;height: 300px;"></a></div>
+        </div>
+    </div>
+    <div class="swiper-pagination"></div>
+</section>
+<script type="text/javascript">
+    window.onload = function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: 3000,
+            speed: 1000,
+            autoplayDisableOnInteraction: false,
+            loop: true,
+            centeredSlides: true,
+            slidesPerView: 2,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            prevButton: '.swiper-button-prev',
+            nextButton: '.swiper-button-next',
+            onInit: function (swiper) {
+                swiper.slides[2].className = "swiper-slide swiper-slide-active";//第一次打开不要动画
+            },
+            breakpoints: {
+                668: {
+                    slidesPerView: 1,
+                }
+            }
+        });
+    }
+</script>
+
+<div class="JZ">
+    <table>
+        <tr>
+            <td class="left">
+                <div class="mtop"><img src="../static/images/jz.jpg" th:src="@{images/jz.jpg}"> 教资</div>
+                <p class="mfont">海量题库，随机练习，强化训练，高效备考
+                    <br/>考点全覆盖，专项突破，专业解析
+                    <br/>收集历年真题，随时可下载，复盘出题，高频考点尽掌握
+                    <br/>真题模考，查漏补缺，考前冲刺
+                </p>
+                <img src="../static/images/cbs.jpg" th:src="@{images/cbs.jpg}"
+                     style="margin-top: 32px;width: 246px; height: 66px;">
+            </td>
+
+            <td class="right">
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c1.jfif" th:src="@{images/c1.jfif}" alt=""></li>
+                        <li><img src="../static/images/c2.jfif" th:src="@{images/c2.jfif}" alt=""></li>
+                        <li><img src="../static/images/c3.jfif" th:src="@{images/c3.jfif}" alt=""></li>
+                        <li><img src="../static/images/c4.jfif" th:src="@{images/c4.jfif}" alt=""></li>
+                        <li><img src="../static/images/c7.jfif" th:src="@{images/c7.jfif}" alt=""></li>
+                        <li><img src="../static/images/c5.webp" th:src="@{images/c5.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture2">
+                        <li><img src="../static/images/c11.webp" th:src="@{images/c11.webp}" alt=""></li>
+                        <li><img src="../static/images/c12.webp" th:src="@{images/c12.webp}" alt=""></li>
+                        <li><img src="../static/images/c13.webp" th:src="@{images/c13.webp}" alt=""></li>
+                        <li><img src="../static/images/c15.webp" th:src="@{images/c15.webp}" alt=""></li>
+                        <li><img src="../static/images/c14.webp" th:src="@{images/c14.webp}" alt=""></li>
+                        <li><img src="../static/images/c16.webp" th:src="@{images/c16.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c9.webp" th:src="@{images/c9.webp}" alt=""></li>
+                        <li><img src="../static/images/c10.jfif" th:src="@{images/c10.jfif}" alt=""></li>
+                        <li><img src="../static/images/c17.webp" th:src="@{images/c17.webp}" alt=""></li>
+                        <li><img src="../static/images/c18.webp" th:src="@{images/c18.webp}" alt=""></li>
+                        <li><img src="../static/images/c19.webp" th:src="@{images/c19.webp}" alt=""></li>
+                        <li><img src="../static/images/c8.jfif" th:src="@{images/c8.jfif}" alt=""></li>
+                    </ul>
+                </nav>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="CET">
+    <table>
+        <tr>
+            <td class="right">
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c1.jfif" th:src="@{images/c1.jfif}" alt=""></li>
+                        <li><img src="../static/images/c2.jfif" th:src="@{images/c2.jfif}" alt=""></li>
+                        <li><img src="../static/images/c3.jfif" th:src="@{images/c3.jfif}" alt=""></li>
+                        <li><img src="../static/images/c4.jfif" th:src="@{images/c4.jfif}" alt=""></li>
+                        <li><img src="../static/images/c7.jfif" th:src="@{images/c7.jfif}" alt=""></li>
+                        <li><img src="../static/images/c5.webp" th:src="@{images/c5.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture2">
+                        <li><img src="../static/images/c11.webp" th:src="@{images/c11.webp}" alt=""></li>
+                        <li><img src="../static/images/c12.webp" th:src="@{images/c12.webp}" alt=""></li>
+                        <li><img src="../static/images/c13.webp" th:src="@{images/c13.webp}" alt=""></li>
+                        <li><img src="../static/images/c15.webp" th:src="@{images/c15.webp}" alt=""></li>
+                        <li><img src="../static/images/c14.webp" th:src="@{images/c14.webp}" alt=""></li>
+                        <li><img src="../static/images/c16.webp" th:src="@{images/c16.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c9.webp" th:src="@{images/c9.webp}" alt=""></li>
+                        <li><img src="../static/images/c10.jfif" th:src="@{images/c10.jfif}" alt=""></li>
+                        <li><img src="../static/images/c17.webp" th:src="@{images/c17.webp}" alt=""></li>
+                        <li><img src="../static/images/c18.webp" th:src="@{images/c18.webp}" alt=""></li>
+                        <li><img src="../static/images/c19.webp" th:src="@{images/c19.webp}" alt=""></li>
+                        <li><img src="../static/images/c8.jfif" th:src="@{images/c8.jfif}" alt=""></li>
+                    </ul>
+                </nav>
+            </td>
+            <td class="left">
+                <div class="mtop"><img src="../static/images/46cet.jpg" th:src="@{images/46cet.jpg}">CET</div>
+                <p class="mfont">五大专项深度优化，一站式解决单词，听力、阅读、
+                    <br/>翻译和写作练习，专项训练查缺补漏
+                    <br/>根据学生备考需求及自身水平，定制学习方案
+                    <br/>等级关卡，增加趣味性告别枯燥
+                </p>
+                <img src="../static/images/cbs.jpg" th:src="@{images/cbs.jpg}"
+                     style="margin-top: 32px;width: 246px; height: 66px;">
+            </td>
+
+
+        </tr>
+    </table>
+</div>
+
+<div class="PTH">
+    <table>
+        <tr>
+            <td class="left">
+                <div class="mtop"><img src="../static/images/pth12.png" th:src="@{images/pth12.png}"> 普通话</div>
+                <p class="mfont">海量考试素材，6595字词，60篇短文阅读
+                    <br/>附带范读音频，全面备考
+                    <br/>汇集普通话考试所以必考知识点
+                    <br/>学好普通话，主持播音都不怕！
+                </p>
+                <img src="../static/images/cbs.jpg" th:src="@{images/cbs.jpg}"
+                     style="margin-top: 32px;width: 246px; height: 66px;">
+            </td>
+
+            <td class="right">
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c1.jfif" th:src="@{images/c1.jfif}" alt=""></li>
+                        <li><img src="../static/images/c2.jfif" th:src="@{images/c2.jfif}" alt=""></li>
+                        <li><img src="../static/images/c3.jfif" th:src="@{images/c3.jfif}" alt=""></li>
+                        <li><img src="../static/images/c4.jfif" th:src="@{images/c4.jfif}" alt=""></li>
+                        <li><img src="../static/images/c7.jfif" th:src="@{images/c7.jfif}" alt=""></li>
+                        <li><img src="../static/images/c5.webp" th:src="@{images/c5.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture2">
+                        <li><img src="../static/images/c11.webp" th:src="@{images/c11.webp}" alt=""></li>
+                        <li><img src="../static/images/c12.webp" th:src="@{images/c12.webp}" alt=""></li>
+                        <li><img src="../static/images/c13.webp" th:src="@{images/c13.webp}" alt=""></li>
+                        <li><img src="../static/images/c15.webp" th:src="@{images/c15.webp}" alt=""></li>
+                        <li><img src="../static/images/c14.webp" th:src="@{images/c14.webp}" alt=""></li>
+                        <li><img src="../static/images/c16.webp" th:src="@{images/c16.webp}" alt=""></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <ul class="picture">
+                        <li><img src="../static/images/c9.webp" th:src="@{images/c9.webp}" alt=""></li>
+                        <li><img src="../static/images/c10.jfif" th:src="@{images/c10.jfif}" alt=""></li>
+                        <li><img src="../static/images/c17.webp" th:src="@{images/c17.webp}" alt=""></li>
+                        <li><img src="../static/images/c18.webp" th:src="@{images/c18.webp}" alt=""></li>
+                        <li><img src="../static/images/c19.webp" th:src="@{images/c19.webp}" alt=""></li>
+                        <li><img src="../static/images/c8.jfif" th:src="@{images/c8.jfif}" alt=""></li>
+                    </ul>
+                </nav>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

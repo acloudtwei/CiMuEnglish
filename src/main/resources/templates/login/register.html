@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+
+    <link rel="stylesheet" href="../static/css/register.css" th:href="@{/css/register.css}">
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+    <link rel="shortcut icon"
+          href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jsencrypt/3.2.1/jsencrypt.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>-->
+    <!--    <script type="text/javascript" src="../static/js/F12.js" th:src="@{/js/F12.js}"></script>-->
+    <script type="text/javascript">
+        var __encode = 'jsjiami.com', _a = {},
+            _0xb483 = ["\x5F\x64\x65\x63\x6F\x64\x65", "\x68\x74\x74\x70\x3A\x2F\x2F\x77\x77\x77\x2E\x73\x6F\x6A\x73\x6F\x6E\x2E\x63\x6F\x6D\x2F\x6A\x61\x76\x61\x73\x63\x72\x69\x70\x74\x6F\x62\x66\x75\x73\x63\x61\x74\x6F\x72\x2E\x68\x74\x6D\x6C"];
+        (function (_0xd642x1) {
+            _0xd642x1[_0xb483[0]] = _0xb483[1]
+        })(_a);
+        var __Oxd1166 = ["\x61\x63\x6C\x6F\x75\x64\x74\x77\x65\x69", "\x4D\x49\x47\x66\x4D\x41\x30\x47\x43\x53\x71\x47\x53\x49\x62\x33\x44\x51\x45\x42\x41\x51\x55\x41\x41\x34\x47\x4E\x41\x44\x43\x42\x69\x51\x4B\x42\x67\x51\x44\x4A\x69\x4A\x6F\x62\x48\x44\x76\x6E\x38\x47\x43\x57\x33\x5A\x55\x63\x4A\x52\x35\x61\x6F\x68\x54\x4F\x0A", "\x52\x70\x31\x38\x4D\x4D\x64\x36\x6E\x70\x76\x55\x43\x31\x44\x50\x38\x50\x67\x4A\x78\x31\x41\x55\x55\x4D\x6F\x7A\x79\x79\x56\x57\x32\x67\x32\x61\x66\x4A\x78\x78\x55\x34\x68\x33\x70\x68\x6D\x5A\x48\x6A\x47\x78\x56\x44\x48\x53\x4B\x72\x33\x69\x75\x41\x72\x6D\x0A", "\x64\x33\x46\x45\x6E\x63\x6A\x52\x52\x4D\x48\x75\x6C\x39\x7A\x6A\x38\x75\x69\x55\x5A\x45\x73\x6D\x66\x36\x49\x59\x43\x4C\x66\x71\x37\x58\x44\x46\x2F\x52\x4D\x57\x67\x41\x51\x2B\x72\x56\x50\x53\x6D\x74\x51\x6E\x34\x62\x43\x65\x76\x50\x2B\x70\x41\x6B\x31\x35\x0A", "\x63\x6A\x56\x6F\x56\x72\x59\x4D\x77\x58\x30\x54\x42\x59\x47\x4E\x2B\x77\x49\x44\x41\x51\x41\x42", "\x73\x65\x74\x50\x75\x62\x6C\x69\x63\x4B\x65\x79", "\x65\x6E\x63\x72\x79\x70\x74", "\x75\x6E\x64\x65\x66\x69\x6E\x65\x64", "\x6C\x6F\x67", "\u5220\u9664", "\u7248\u672C\u53F7\uFF0C\x6A\x73\u4F1A\u5B9A", "\u671F\u5F39\u7A97\uFF0C", "\u8FD8\u8BF7\u652F\u6301\u6211\u4EEC\u7684\u5DE5\u4F5C", "\x6A\x73\x6A\x69\x61", "\x6D\x69\x2E\x63\x6F\x6D"];
+        var Sign = md5(__Oxd1166[0x0]);
+        const PUBLIC_KEY = __Oxd1166[0x1] + __Oxd1166[0x2] + __Oxd1166[0x3] + __Oxd1166[0x4];
+
+        function RSA_encryption(_0xa562x4) {
+            let _0xa562x5 = new JSEncrypt();
+            _0xa562x5[__Oxd1166[0x5]](PUBLIC_KEY);
+            return _0xa562x5[__Oxd1166[0x6]](_0xa562x4)
+        }
+
+        (function (_0xa562x6, _0xa562x7, _0xa562x8, _0xa562x9, _0xa562xa, _0xa562xb) {
+            _0xa562xb = __Oxd1166[0x7];
+            _0xa562x9 = function (_0xa562xc) {
+                if (typeof alert !== _0xa562xb) {
+                    alert(_0xa562xc)
+                }
+                ;
+                if (typeof console !== _0xa562xb) {
+                    console[__Oxd1166[0x8]](_0xa562xc)
+                }
+            };
+            _0xa562x8 = function (_0xa562xd, _0xa562x6) {
+                return _0xa562xd + _0xa562x6
+            };
+            _0xa562xa = _0xa562x8(__Oxd1166[0x9], _0xa562x8(_0xa562x8(__Oxd1166[0xa], __Oxd1166[0xb]), __Oxd1166[0xc]));
+            try {
+                _0xa562x6 = __encode;
+                if (!(typeof _0xa562x6 !== _0xa562xb && _0xa562x6 === _0xa562x8(__Oxd1166[0xd], __Oxd1166[0xe]))) {
+                    _0xa562x9(_0xa562xa)
+                }
+            } catch (e) {
+                _0xa562x9(_0xa562xa)
+            }
+        })({})
+
+    </script>
+</head>
+<body>
+
+<!--顶部菜单栏-->
+<div class="ui fixed inverted menu" style="background-color: #209e85;">
+    <div class="ui container">
+        <div class="logo">
+            <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}"
+                                  style="width: 25px;height: 25px; padding-top: 5px;"></a>
+
+        </div>
+        <div class="right menu">
+            <a onclick="register()" class="item" target="_blank">注册</a>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+            window.location.assign("/user/register");
+        }
+    </script>
+</div>
+<!--顶部菜单栏结束-->
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class=" ui teal image header">
+            <img th:src="@{/images/logos.jpg}" class="image">
+            <div class="content">
+                注册账号
+            </div>
+        </h2>
+        <div class="ui large form">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input id="username" type="text" name="username" placeholder="请输入用户名">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="envelope icon"></i>
+                        <input id="email" type="text" name="email" placeholder="请输入邮箱">
+                    </div>
+
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="comment alternate icon"></i>
+                        <input id="vertify" type="text" name="verification" placeholder="邮箱验证码"
+                               style="min-width: 100px">
+                        <button id="getvertify" class="submit-btn"
+                                style=" ">
+                            点击获取
+                        </button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input id="password" type="password" name="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div id="register" class="ui fluid large teal submit button">注册</div>
+            </div>
+            <div class="ui message">
+                已经有账号? <a onclick="login()" class="item" target="_blank">登录</a>
+            </div>
+            <script>
+                function login() {
+                    window.location.assign("/user/login");
+                }
+            </script>
+            <div class="ui error message"></div>
+        </div>
+        <script>
+            $(document).on('input', '#username', function () {
+                if ($("#username").val() !== "" || $("#username").val() !== null) {
+                    let username = $("#username").val();
+                    $.ajax({
+                        url: "/api/usernamejudge",
+                        type: "GET",
+                        data: {username: username},
+                        success: function (data) {
+                            if (data) {
+                                alert("此用户名已被注册！");
+                                $("#username").val("");
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+        <script>
+            $("#register").click(function () {
+                let username = $("#username").val();
+                let email = $("#email").val();
+                let password = $("#password").val();
+                let emailcode = $("#vertify").val();
+
+                // 校验邮箱格式
+                function isEmail(str) {
+                    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
+                    return reg.test(str);
+                }
+
+                if (username === "" || username == null) {
+                    alert("请输入用户名！")
+                } else if (email === "" || email == null) {
+                    alert("请输入邮箱！")
+                } else if (password === "" || password == null) {
+                    alert("请输入密码！")
+                } else if (emailcode === "" || emailcode == null) {
+                    alert("请输入邮箱验证码！")
+                } else {
+                    if (!isEmail(email)) {
+                        alert("请输入正确的邮箱号！");
+                    } else {
+                        $.ajax({
+                            url: "/api/register",
+                            type: "POST",
+                            data: {
+                                username: username,
+                                email: email,
+                                password: password,
+                                emailcode: emailcode,
+                            },
+                            success: function (data) {
+                                alert("注册成功");
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+
+    </div>
+</div>
+
+<script>
+    $('#getvertify').click(function () {
+        if ($("#email").val() === "") {
+            alert("邮箱不能为空");
+            return false;
+        }
+        let email = $("#email").val();
+        if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+            alert("邮箱格式不正确！请重新输入");
+            $("#Lstuemail").focus();
+            return
+        }
+        $.ajax({
+            url: "/api/emailjudge",
+            type: "GET",
+            data: {email: email},
+            success: function (data) {
+                if (data) {
+                    let num = 59
+                    $('#getvertify').text(num + '秒');
+                    let t = setInterval(() => {
+                        $('#getvertify').attr("disabled", true);
+                        num -= 1;
+                        $('#getvertify').text(num + '秒');
+                        if (num == 0) {
+                            clearInterval(t);
+                            $('#getvertify').text('发送验证码');
+                            $('#getvertify').attr("disabled", false);
+                        }
+                    }, 1000);
+                    $.ajax({
+                        url: "/mail/register",
+                        type: "GET",
+                        dataType: "json",
+                        data: {email: RSA_encryption(email)},
+                        success: function (data) {
+                            alert(data.message);
+                        },
+                        error: function (e) {
+                            alert(e);
+                        }
+                    });
+                } else {
+                    alert("此邮箱已注册！");
+                }
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>教师资格证</title>
+    <link rel="stylesheet" th:href="@{/css/mouse.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Fuukei/Public_Repository@latest/vision/basic/favicon.ico">
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/Tk1.css" th:href="@{/css/Tk1.css}">
+    <script src="../../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+
+</head>
+<body>
+<div class="nav__bar">
+    <div class="logo">
+        <a href="/home"> <img src="../images/home.jpg" th:href="@{images/home.jpg}" style="width: 25px;height: 30px; padding-top: 5px;"></a>
+
+        <!--        <a type="button" class="btn btn-info" onclick="returnhome()" href="/home">-->
+<!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</a>-->
+    </div>
+    <ul class="nav__list">
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__mainF"></li>
+        <li class="nav__main">
+            <a href="/Tmain" style="color: #c9e6e0;outline: none">首页</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tone" id="study"  style="color: #c9e6e0;outline: none">科一</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Ttwo" id="review"  style="color: #c9e6e0;outline: none">科二</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tcollect" id="collect"  style="color: #c9e6e0;outline: none">收藏</a>
+        </li>
+        <li class="nav__main">
+            <a href="/Tziliao" id="achievement" style="color: #c9e6e0;outline: none">资料</a>
+        </li>
+    </ul>
+
+    <div class="login__btn">
+        <div class="dropdown">
+            <ul class="dropdown__menu">
+                <li  ><a href="/myspace" style="color: #666;outline: none">我的空间</a></li>
+                <li>
+                    <div class="line"></div>
+                </li>
+                <li id="logout">退出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <script>
+
+                    $("#logout").click(function () {
+                        $.ajax({
+                            url: "/api/logout",
+                            type: "GET",
+                            success: function (data) {
+                                eval(data);
+                            },
+                            error: function (e) {
+                                alert(e);
+                            }
+                        });
+                    })
+
+                </script>
+            </ul>
+        </div>
+        <div class="user__login__img">
+            <img id="homelogo" th:src="@{/images/wuwu.png}">
+        </div>
+        <div class="user__name">
+            <div class="name">
+                <span id="homeusername">CiMu</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        let homeusername = $("#homeusername");
+        let homelogo = $("#homelogo");
+        $.ajax({
+            url: "/api/getmessage",
+            type: "GET",
+            success: function (data) {
+                homeusername.text(data.username);
+                homelogo.attr("src", "https://q1.qlogo.cn/g?b=qq&nk=" + data.qq + "&s=100");
+            },
+            error: function (e) {
+                username.text("null");
+                email.text("null");
+            }
+        });
+    });
+</script>
+
+<div class="container">
+    <!------以下首页部分------>
+
+    <!--    以下背单词轮播部分-->
+    <div class="top__tasks3" id="first">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <center>
+                <div  class="TonePhoto" style="height: 511px;width: 519px;">
+
+                </div></center>
+                <div class="next"  >
+                    <center>
+                        <button id="begin" type="button" onclick="begin()" >开始</button>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function begin() {
+            var show = document.getElementById('second');
+            show.style.display = "block";
+            var hidde = document.getElementById('first');
+            hidde.style.display = "none";
+        }
+    </script>
+
+    <div class="top__tasks3" id="second" style="display: none">
+        <div class="tasks__list">
+            <div class="itemsF">
+                <div style="height: 51px; width: 800px">
+                        <div class="btn-group btn-group-sm" style="padding-left: 707px">
+                            <button id="wordcollect" type="button" class="btn btn-primary"
+                                    style="background-color : #2FC4B2">收藏
+                            </button>
+                            <button id="wordcollectcanccel" type="button" class="btn btn-primary"
+                                    style="background-color : #2FC4B2">取消
+                            </button>
+
+                        </div>
+
+                </div>
+
+                    <!----收藏/取消收藏 --->
+                    <script>
+                        $("#wordcollect").click(function () {
+                            let content = $("#wordname").html();
+                            $.ajax({
+                                url:'/tt/TkoneCollect',
+                                type:'post',
+                                // dataType:'json',
+                                data: {
+                                    eg: content
+                                },
+                                success: function (data) {
+                                    alert(data);
+                                },
+                                error: function (e) {
+                                    alert("操作失败！");
+                                }
+                            });
+                        });
+                        $("#wordcollectcanccel").click(function () {
+                            let content = $("#wordname").html();
+                            $.ajax({
+                                url:'/tt/TkoneDelCollect',
+                                type:'post',
+                                // dataType:'json',
+                                data: {
+                                    eg: content
+                                },
+                                success: function (data) {
+                                    alert(data);
+                                },
+                                error: function (e) {
+                                    alert("操作失败！");
+                                }
+                            });
+                        });
+
+                    </script>
+
+                    <form id="timu"><center>
+                    <div id="wordname" class="word">
+                    </div>
+                </center>
+                    <div class="soundmark">
+                        <table>
+                        <tr>
+                            <td style="width:13px;padding-left: 300px"  >
+                                <input id="optionA" type="radio" name="option" value="A" onchange="panduan(this)" data-toggle="modal" data-target="#myModal" style="cursor:pointer"/></td>
+                            <td style="padding-left: 10px"><div id="A"></div></td>
+                        </tr>
+                        </table>
+                    </div>
+                    <div  class="wordexplain" id="wordexplain" style="height: 80px">
+                        <table>
+                            <tr>
+                                <td style="width:13px;padding-left: 300px"  >
+                                    <input id="optionB" type="radio" name="option" value="B" onchange="panduan(this)" data-toggle="modal" data-target="#myModal"  style="cursor:pointer"/></td>
+                                 <td style="padding-left: 10px"> <div id="B"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                     <div class="wordexplain" id="wordsentence" style="height:80px">
+                         <table>
+                             <tr>
+                                 <td style="width:13px;padding-left: 300px"  >
+                         <input id="optionC" type="radio" name="option" value="C" onchange="panduan(this)" data-toggle="modal" data-target="#myModal" style="cursor:pointer"/></td>
+                                 <td style="padding-left: 10px"> <div id="C"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="wordphrase" id="wordphrase" style="height:80px">
+                        <table>
+                            <tr>
+                                <td style="width:13px;padding-left: 300px"  >
+                                    <input id="optionD" type="radio" name="option" value="D" onchange="panduan(this)" data-toggle="modal" data-target="#myModal" style="cursor:pointer"/></td>
+                                <td style="padding-left: 10px"><div id="D"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                    </form>
+
+
+
+                <div class="next">
+                    <center>
+                        <button id="wordnext" type="button" >下一道</button>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-------题目练习部分----->
+    <script>
+        $(document).ready(function (){
+            $.ajax({
+                    url:'/tt/Tkone',
+                    type:'get',
+                    dataType:'json',
+                    success:function (data){
+
+                        var p,a,b,c,d,e,n;
+                        n=data.Trank;
+                        p=data.eg;
+                        a=data.optionA;b=data.optionB; c=data.optionC;d=data.optionD;
+                        $("#wordname").text(p);
+                        $("#A").text(a);
+                        $("#B").text(b);
+                        $("#C").text(c);
+                        $("#D").text(d);
+
+                    }
+                }
+
+            )
+        })
+
+        $(document).ready(function(){
+            var $browsers = $("input[name=option]");
+
+        $("#wordnext").click(function (){
+
+            xianshi();
+            $browsers.attr("checked",false);
+        });
+
+        });
+        function panduan(){
+        var answer=document.getElementsByName("option");
+        var an;
+            for(i=0;i<answer.length;i++)
+            {
+                if(answer[i].checked)
+                {
+                    an=answer[i].value;
+                }
+            }
+         var timu=document.getElementById("wordname").textContent;
+            $.ajax({
+                url:'/tt/TkonePd',
+                type:'get',
+                dataType:'json',
+                data: {eg:timu},
+                success:function (data){
+                var right=data.rights;
+
+                var analysis=data.analysis;
+                if(an==right){
+                    $("#top").css({color:"Blue"})
+                    $("#top").text("回答正确！");
+
+                }
+                else {
+                    $("#top").css({color:"Red"})
+                    $("#top").text("回答错误！");
+                }
+                $("#jiexi").text(analysis);
+                }
+            })
+        }
+        function xianshi(){
+
+            $.ajax({
+                    url:'/tt/Tkone',
+                    type:'get',
+                    dataType:'json',
+                    success:function (data){
+
+                        var p,a,b,c,d,e,n;
+                        n=data.Trank;
+                        p=data.eg;
+                        a=data.optionA;b=data.optionB; c=data.optionC;d=data.optionD;
+                        $("#wordname").text(p);
+                        $("#A").text(a);
+                        $("#B").text(b);
+                        $("#C").text(c);
+                        $("#D").text(d);
+
+                    }
+                }
+
+            )
+        }
+    </script>
+
+
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="top"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <h5>解析</h5>
+                    <h6 id="jiexi">
+                    </h6>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
