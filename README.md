@@ -27,22 +27,22 @@ IntelliJ IDEA 2020.1
 
 ### 页面截图
 首页
-![index.jpg](http://imgtu.aiyunkj.com/2022/05/20/b6210ccd82e2b.jpg)
+![index.jpg](images/index.jpg)
 
 登录页
-![login.jpg](http://imgtu.aiyunkj.com/2022/05/20/b99a574353143.jpg)
+![login.jpg](images/login.jpg)
 
 背单词模块页面
-![english.jpg](http://imgtu.aiyunkj.com/2022/05/20/ad22ef8e15851.jpg)
+![english.jpg](images/english.jpg)
 
 教师资格证模块页面
-![teacher.jpg](http://imgtu.aiyunkj.com/2022/05/20/ec09a12470f65.jpg)
+![teacher.jpg](images/teacher.jpg)
 
 普通话模块页面
-![mandarin.jpg](http://imgtu.aiyunkj.com/2022/05/20/db92b6ccbba95.jpg)
+![mandarin.jpg](images/mandarin.jpg)
 
 后台页面
-![admin.jpg](http://imgtu.aiyunkj.com/2022/05/20/e76c2239af3f2.jpg)
+![admin.jpg](images/admin.jpg)
 
 ### 开发者介绍
 
