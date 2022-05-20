@@ -15,7 +15,7 @@ IntelliJ IDEA 2020.1
 
 1、启动前，请配置 application.properties和application.yml 中相关MySQL、邮箱的配置，其中我用的是QQ邮箱，当然你也可以用其他的邮箱！
 
-2、登录地址**(管理员账号密码：cimu cimu123456)**：http://localhost:8080/myspace
+2、登录地址（**管理员账号密码：cimu cimu123456**）：http://localhost:8080/myspace
 
 3、普通用户登录是功能界面，管理员用户登录是后台界面！
 
